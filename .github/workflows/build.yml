@@ -14,20 +14,31 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+      - name: Background plugin
+        continue-on-error: true
+        run: |
+          npm install --legacy-peer-deps
+          for v in $(npm view @anuradev/capacitor-background-mode versions --json | node -pe "JSON.parse(require('fs').readFileSync(0)).reverse().join(' ')"); do
+            if npm view @anuradev/capacitor-background-mode@$v peerDependencies --json | grep -Eq '"@capacitor/core": "[^"]*6\.'; then
+              npm install @anuradev/capacitor-background-mode@$v --legacy-peer-deps && break
+            fi
+          done
       - name: Build
         run: |
           mkdir www
           cp index.html firebase-config.js icon-192.png www/
-          npm install
+          npm install --legacy-peer-deps
           npx cap add android
           M=android/app/src/main/AndroidManifest.xml
-          sed -i 's#</manifest>#<uses-permission android:name="android.permission.RECORD_AUDIO"/><uses-permission android:name="android.permission.CAMERA"/><uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/></manifest>#' $M
+          sed -i 's#</manifest>#<uses-permission android:name="android.permission.RECORD_AUDIO"/><uses-permission android:name="android.permission.CAMERA"/><uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/><uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><uses-permission android:name="android.permission.FOREGROUND_SERVICE"/><uses-permission android:name="android.permission.WAKE_LOCK"/></manifest>#' $M
           R=android/app/src/main/res
           rm -rf $R/mipmap-anydpi-v26
           for d in $R/mipmap-*; do cp icon-192.png $d/ic_launcher.png; cp icon-192.png $d/ic_launcher_round.png; done
           npx cap sync android
           cd android
           chmod +x gradlew
+          mkdir -p ~/.android
+          cp "$GITHUB_WORKSPACE/debug.keystore" ~/.android/debug.keystore
           ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
