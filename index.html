@@ -50,6 +50,13 @@ textarea{resize:none;max-height:120px;border-radius:20px}
 .pane{display:none;flex:1;flex-direction:column;min-height:0;overflow-y:auto}.pane.on{display:flex}
 #pbody span{font-size:28px;cursor:pointer;padding:2px}#pbody img{width:72px;height:72px;object-fit:contain}.stk{width:140px;height:140px;object-fit:contain;display:block}
 .msg.me{color:#fff}.msg.me .tm{color:#cfc6ff}#callui{color:#fff}
+#chatNormalHeader{display:flex;align-items:center;gap:10px;width:100%}
+#chatSelectHeader{display:none;align-items:center;gap:10px;width:100%}
+#chatSelectHeader .selcount{font-size:20px;font-weight:700;min-width:28px}
+#chatSelectHeader .selspacer{flex:1}
+.msg.selected{outline:2px solid var(--q);background:rgba(162,107,255,.24)!important}
+.msg{user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+
 .th{width:46px;height:46px;border-radius:50%;border:3px solid transparent}.th.on{border-color:var(--txt)}
 .pulse{animation:pl 1.5s infinite}@keyframes pl{0%{box-shadow:0 0 0 0 rgba(255,255,255,.35)}100%{box-shadow:0 0 0 50px rgba(255,255,255,0)}}
 .cb{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;width:84px;text-align:center}.cb button{width:64px;height:64px;border-radius:50%;border:0;font-size:26px;background:rgba(255,255,255,.14);color:#fff}.cb button.on{background:#fff;color:#111}
@@ -90,7 +97,14 @@ textarea{resize:none;max-height:120px;border-radius:20px}
   <div style="padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto"><input id="gname" maxlength="30" placeholder="Название группы"><div class="dim">Выберите участников из друзей</div><div id="gfr"></div><button class="btn" id="gmake">Создать</button></div>
 </div>
 <div class="scr" id="s-chat">
-  <header><button class="ib" id="back">←</button><div class="av" id="cav" style="width:36px;height:36px;font-size:15px"></div><div class="brand" style="font-size:18px;flex-direction:column;align-items:flex-start;gap:0"><span id="cname"></span><span id="cstat" class="dim" style="font-weight:400"></span></div><button class="ib" id="ca">📞</button><button class="ib" id="cv">🎥</button></header>
+  <header>
+  <div id="chatNormalHeader">
+    <button class="ib" id="back">←</button><div class="av" id="cav" style="width:36px;height:36px;font-size:15px"></div><div class="brand" style="font-size:18px;flex-direction:column;align-items:flex-start;gap:0"><span id="cname"></span><span id="cstat" class="dim" style="font-weight:400"></span></div><button class="ib" id="ca">📞</button><button class="ib" id="cv">🎥</button>
+  </div>
+  <div id="chatSelectHeader">
+    <button class="ib" id="selCancel">←</button><span class="selcount" id="selCount">1</span><span class="selspacer"></span><button class="ib" id="selDelete" title="Удалить">🗑</button>
+  </div>
+</header>
   <div id="log"></div>
   <div id="panel" style="display:none;border-top:1px solid var(--line);max-height:230px;overflow-y:auto;padding:0 8px 8px"><div class="tabs"><button id="pe" class="on">Смайлики</button><button id="ps">Стикеры</button></div><div id="pbody" style="display:flex;flex-wrap:wrap;gap:6px;padding-top:8px"></div></div>
 <footer><button class="ib" id="em">😊</button><button class="ib" id="ph">📷</button><input type="file" id="sf" accept="image/*" hidden><input type="file" id="pf" accept="image/*" hidden><textarea id="in" rows="1" placeholder="Сообщение…"></textarea><button id="send">➤</button></footer>
@@ -221,14 +235,65 @@ let base=null,grp=null,groups=[];
 let unPeer=null,unTyp=null,lastT=0,peerSeen=0,peerTyp=0;
 const EM=["👍","❤️","😂","😮","😢"];
 function status(){const t=Date.now();$("cstat").textContent=t-peerTyp<4000?"печатает…":t-peerSeen<70000?"в сети":peerSeen?"был(а) в "+new Date(peerSeen).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):""}
+let selectedMsgs=new Map(),longPressTimer=null,longPressFired=false;
+const selectionUI=on=>{
+  $("chatNormalHeader").style.display=on?"none":"flex";
+  $("chatSelectHeader").style.display=on?"flex":"none";
+  $("selCount").textContent=selectedMsgs.size;
+  $("selDelete").disabled=!Array.from(selectedMsgs.values()).some(x=>x.mine);
+  $("selDelete").style.opacity=$("selDelete").disabled?".45":"1";
+};
+function clearSelection(){
+  selectedMsgs.forEach(x=>x.el.classList.remove("selected"));
+  selectedMsgs.clear();selectionUI(false);
+}
+function toggleSelected(ref,w,mine){
+  if(!mine)return;
+  const id=ref.path;
+  if(selectedMsgs.has(id)){w.classList.remove("selected");selectedMsgs.delete(id)}
+  else{w.classList.add("selected");selectedMsgs.set(id,{ref,el:w,mine})}
+  if(!selectedMsgs.size)selectionUI(false);else selectionUI(true);
+}
+async function deleteSelected(){
+  const refs=Array.from(selectedMsgs.values()).filter(x=>x.mine).map(x=>x.ref);
+  if(!refs.length)return;
+  if(!confirm(refs.length===1?"Удалить сообщение у всех?":"Удалить выбранные сообщения у всех?"))return;
+  $("selDelete").disabled=true;
+  try{await Promise.all(refs.map(ref=>deleteDoc(ref)));clearSelection()}
+  catch(e){alert("Не удалось удалить сообщение.");$("selDelete").disabled=false}
+}
+$("selCancel").onclick=clearSelection;
+$("selDelete").onclick=deleteSelected;
+
 function pick(ref,w,mine){
+  if(selectedMsgs.size){toggleSelected(ref,w,mine);return}
   const o=w.querySelector(".pk");if(o){o.remove();return}
   const b=document.createElement("div");b.className="pk";
   EM.forEach(e=>{const x=document.createElement("span");x.textContent=e;x.onclick=ev=>{ev.stopPropagation();updateDoc(ref,{["reactions."+me]:e}).catch(()=>{})};b.appendChild(x)});
   if(mine){const x=document.createElement("span");x.textContent="🗑";x.onclick=ev=>{ev.stopPropagation();if(confirm("Удалить сообщение у всех?"))deleteDoc(ref).catch(()=>alert("Не удалось удалить."))};b.appendChild(x)}
   w.appendChild(b);
 }
+function bindLongPress(ref,w,mine){
+  const start=ev=>{
+    if(ev.button!==undefined&&ev.button!==0)return;
+    longPressFired=false;clearTimeout(longPressTimer);
+    longPressTimer=setTimeout(()=>{
+      longPressFired=true;toggleSelected(ref,w,mine);
+      if(navigator.vibrate)navigator.vibrate(35);
+    },520);
+  };
+  const cancel=()=>clearTimeout(longPressTimer);
+  w.addEventListener("pointerdown",start);
+  w.addEventListener("pointerup",cancel);
+  w.addEventListener("pointercancel",cancel);
+  w.addEventListener("pointerleave",cancel);
+  w.addEventListener("click",ev=>{
+    if(longPressFired){ev.preventDefault();ev.stopPropagation();longPressFired=false;return}
+    pick(ref,w,mine);
+  });
+}
 function openChat(u,g){
+  clearSelection();
   grp=g||null;curKey=g?"g"+g.id:pairId(me,u);base=g?["groups",g.id]:["dms",pairId(me,u)];pair=g?null:pairId(me,u);peerSeen=0;peerTyp=0;$("ca").style.display=$("cv").style.display=g?"none":"";
   if(g){$("cname").textContent=g.name;$("cstat").textContent=g.members.length+" участн.";$("cav").style.background=col(g.id);$("cav").textContent="👥"}else{$("cname").textContent=nicks[u]||"Гость";$("cstat").textContent="";mkav($("cav"),nicks[u],u)}
   show("s-chat");$("log").innerHTML="";
@@ -250,7 +315,7 @@ function openChat(u,g){
       if(rs.length){const r=document.createElement("div");r.className="rx";r.textContent=rs.join(" ");w.appendChild(r)}
       const dt=new Date(m.ts),tm=document.createElement("div");tm.className="tm";
       tm.textContent=dt.getHours()+":"+("0"+dt.getMinutes()).slice(-2)+(mine&&!grp?(m.read?" ✓✓":" ✓"):"");
-      w.appendChild(tm);w.onclick=()=>pick(d.ref,w,mine);log.appendChild(w);
+      w.appendChild(tm);bindLongPress(d.ref,w,mine);log.appendChild(w);
     });
     log.scrollTop=log.scrollHeight;
   });
