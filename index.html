@@ -80,6 +80,9 @@ footer{position:relative}
 .sw:after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
 .sw:checked{background:var(--p)!important}.sw:checked:after{left:23px}
 .tx{font-size:var(--fs,16px)}
+html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+input,textarea{-webkit-user-select:text;user-select:text}
+.msg,.msg *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none}
 </style>
 </head>
 <body>
@@ -318,10 +321,11 @@ let base=null,grp=null,groups=[];
 let unPeer=null,unTyp=null,lastT=0,peerSeen=0,peerTyp=0;
 const EM=["👍","❤️","😂","😮","😢"];
 function status(){const t=Date.now();$("cstat").textContent=t-peerTyp<4000?"печатает…":t-peerSeen<70000?"в сети":peerSeen?"был(а) в "+new Date(peerSeen).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):""}
-function pick(ref,w,mine){
+function pick(ref,w,mine,txt){
   const o=w.querySelector(".pk");if(o){o.remove();return}
   const b=document.createElement("div");b.className="pk";
   EM.forEach(e=>{const x=document.createElement("span");x.textContent=e;x.onclick=ev=>{ev.stopPropagation();updateDoc(ref,{["reactions."+me]:e}).catch(()=>{})};b.appendChild(x)});
+  if(txt){const x=document.createElement("span");x.textContent="📋";x.onclick=ev=>{ev.stopPropagation();try{navigator.clipboard.writeText(txt)}catch(e){}b.remove()};b.appendChild(x)}
   {const x=document.createElement("span");x.textContent="🗑";x.onclick=ev=>{ev.stopPropagation();askDel(ref,w,mine)};b.appendChild(x)}
   w.appendChild(b);
 }
@@ -347,7 +351,7 @@ function openChat(u,g){
       if(rs.length){const r=document.createElement("div");r.className="rx";r.textContent=rs.join(" ");w.appendChild(r)}
       const dt=new Date(m.ts),tm=document.createElement("div");tm.className="tm";
       tm.textContent=dt.getHours()+":"+("0"+dt.getMinutes()).slice(-2)+(mine&&!grp?(m.read?" ✓✓":" ✓"):"");
-      w.appendChild(tm);w.onclick=()=>pick(d.ref,w,mine);log.appendChild(w);
+      w.appendChild(tm);w.onclick=()=>pick(d.ref,w,mine,m.text);w.oncontextmenu=e=>e.preventDefault();log.appendChild(w);
     });
     log.scrollTop=log.scrollHeight;
   });
