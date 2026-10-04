@@ -53,6 +53,14 @@ textarea{resize:none;max-height:120px;border-radius:20px}
 .th{width:46px;height:46px;border-radius:50%;border:3px solid transparent}.th.on{border-color:var(--txt)}
 .pulse{animation:pl 1.5s infinite}@keyframes pl{0%{box-shadow:0 0 0 0 rgba(255,255,255,.35)}100%{box-shadow:0 0 0 50px rgba(255,255,255,0)}}
 .cb{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;width:84px;text-align:center}.cb button{width:64px;height:64px;border-radius:50%;border:0;font-size:26px;background:rgba(255,255,255,.14);color:#fff}.cb button.on{background:#fff;color:#111}
+header{background:linear-gradient(180deg,rgba(162,107,255,.16),transparent)}
+.row{background:var(--card);border:1px solid var(--line);margin-bottom:8px;padding:10px 12px;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:transform .12s}
+.row:active{transform:scale(.98)}
+#list{padding:10px}#list .av{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--q)}
+#log{background-image:radial-gradient(circle at 15% 20%,rgba(162,107,255,.10),transparent 40%),radial-gradient(circle at 85% 80%,rgba(255,122,89,.09),transparent 40%)}
+.empty{display:flex;flex-direction:column;align-items:center}.eico{font-size:56px}
+.mi{display:block;width:100%;text-align:left;background:none;border:0;color:var(--txt);font:inherit;padding:12px 14px;border-radius:10px}.mi:active{background:var(--line)}
+.tabs button{transition:color .2s}
 </style>
 </head>
 <body>
@@ -72,20 +80,21 @@ textarea{resize:none;max-height:120px;border-radius:20px}
 <div class="scr" id="s-nick"><div class="center">
   <div class="ring" style="margin:0 auto;width:48px;height:48px"></div>
   <h1>Орбита</h1>
-  <div class="dim">Придумайте ник. Вам выдадут личный ID, по нему друзья смогут вас найти.</div>
+  <div class="dim">Придумайте уникальное имя пользователя. По нему друзья смогут вас найти.</div>
   <input id="nick" maxlength="20" placeholder="Ваш ник" autocomplete="off">
+  <div id="nerr" style="color:#ff7a7a;min-height:20px;font-size:14px"></div>
   <button class="btn" id="nickok">Начать</button>
 </div></div>
 
 <div class="scr" id="s-home">
-  <header><div class="brand"><span class="ring"></span>Орбита</div></header>
-  <div class="tabs"><button id="t1" class="on">Чаты</button><button id="t2">✨ Найти друзей</button><button id="t3">Профиль</button></div>
-  <div id="p1" class="pane on"><button class="btn" id="newg" style="margin:10px 16px 0">＋ Создать группу</button><div id="list"></div></div>
+  <header><div class="brand"><span class="ring"></span>Орбита</div><button class="ib" id="dots">⋮</button></header>
+  <div class="tabs"><button id="t1" class="on">💬 Чаты</button><button id="t2">✨ Найти друзей</button><button id="t3">👤 Профиль</button></div>
+  <div id="p1" class="pane on"><div id="list"></div></div>
   <div id="p2" class="pane">
-    <div class="add on" id="addbox"><input id="addid" placeholder="ID друга" autocomplete="off"><button class="btn" id="addok">Добавить</button></div>
+    <div class="add on" id="addbox"><input id="addid" placeholder="Имя пользователя" autocomplete="off"><button class="btn" id="addok">Добавить</button></div>
     <div style="padding:4px 16px 8px"><input id="sq" placeholder="🔍 Поиск по нику" autocomplete="off"></div><div id="sres" style="padding:0 10px"></div>
-    <div class="me-id"><div><div class="dim" id="mynick"></div><b id="myid"></b></div><button id="cp">Копировать</button></div>
-    <div class="dim" style="padding:14px 16px">Введите ID друга выше или отправьте ему свой. Друг сразу появится во вкладке «Чаты».</div>
+    <div class="me-id"><div><div class="dim">Ваше имя пользователя</div><b id="myid"></b></div><button id="cp">Копировать</button></div>
+    <div class="dim" style="padding:14px 16px">Введите имя пользователя друга выше или найдите его поиском по нику. Друг сразу появится во вкладке «Чаты».</div>
   </div>
   <div id="p3" class="pane" style="padding:16px;gap:12px">
     <div style="display:flex;align-items:center;gap:14px"><div class="av" id="pav" style="width:76px;height:76px;font-size:32px"></div><button class="btn" id="pavb" style="padding:8px 14px">Сменить фото</button><input type="file" id="pavf" accept="image/*" hidden></div>
@@ -104,12 +113,19 @@ textarea{resize:none;max-height:120px;border-radius:20px}
   <div style="padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto"><input id="gname" maxlength="30" placeholder="Название группы"><div class="dim">Выберите участников из друзей</div><div id="gfr"></div><button class="btn" id="gmake">Создать</button></div>
 </div>
 <div class="scr" id="s-chat">
-  <header><button class="ib" id="back">←</button><div class="av" id="cav" style="width:36px;height:36px;font-size:15px"></div><div class="brand" style="font-size:18px;flex-direction:column;align-items:flex-start;gap:0"><span id="cname"></span><span id="cstat" class="dim" style="font-weight:400"></span></div><button class="ib" id="ca">📞</button><button class="ib" id="cv">🎥</button></header>
+  <header><button class="ib" id="back">←</button><div class="av" id="cav" style="width:36px;height:36px;font-size:15px"></div><div class="brand" id="chead" style="font-size:18px;flex-direction:column;align-items:flex-start;gap:0"><span id="cname"></span><span id="cstat" class="dim" style="font-weight:400"></span></div><button class="ib" id="ca">📞</button><button class="ib" id="cv">🎥</button></header>
   <div id="log"></div>
   <div id="panel" style="display:none;border-top:1px solid var(--line);max-height:230px;overflow-y:auto;padding:0 8px 8px"><div class="tabs"><button id="pe" class="on">Смайлики</button><button id="ps">Стикеры</button></div><div id="pbody" style="display:flex;flex-wrap:wrap;gap:6px;padding-top:8px"></div></div>
 <footer><button class="ib" id="em">😊</button><button class="ib" id="ph">📷</button><input type="file" id="sf" accept="image/*" hidden><input type="file" id="pf" accept="image/*" hidden><textarea id="in" rows="1" placeholder="Сообщение…"></textarea><button id="send">➤</button></footer>
 </div>
 
+<div id="menu" style="display:none;position:fixed;inset:0;z-index:8"><div style="position:absolute;top:calc(64px + env(safe-area-inset-top,0px));right:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px;min-width:210px;box-shadow:0 8px 30px rgba(0,0,0,.45)"><button id="newg" class="mi">👥 Создать группу</button></div></div>
+<div id="pview" style="display:none;position:fixed;inset:0;z-index:8;background:rgba(0,0,0,.6);align-items:flex-end"><div style="width:100%;background:var(--bg);background-image:var(--bgi);border-radius:24px 24px 0 0;padding:20px 20px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:10px">
+<div class="av" id="pvav" style="width:140px;height:140px;font-size:56px;cursor:pointer"></div><div class="dim" id="pvhint">Нажмите на фото, чтобы открыть</div>
+<div id="pvreal" style="font-weight:700;font-size:18px"></div><div class="dim" id="pvbio"></div>
+<div class="dim" style="align-self:flex-start">Имя для вас (видите только вы)</div><input id="pvname" maxlength="30">
+<div style="display:flex;gap:10px;width:100%"><button class="btn" id="pvsave" style="flex:1">Сохранить</button><button class="btn" id="pvreset" style="flex:1;background:var(--card);border:1px solid var(--line)">Сбросить</button></div></div></div>
+<div id="viewer" style="display:none;position:fixed;inset:0;z-index:10;background:#000;align-items:center;justify-content:center"><img id="viewimg" style="max-width:100%;max-height:100%;object-fit:contain"></div>
 <div id="callui" style="display:none;position:fixed;inset:0;z-index:9;flex-direction:column;align-items:center;color:#fff;background:linear-gradient(180deg,#0b1218,#101a24)">
 <video id="rv" autoplay playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0"></video>
 <video id="lv" autoplay playsinline muted style="display:none;position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:14px;width:90px;border-radius:12px"></video>
@@ -124,7 +140,7 @@ textarea{resize:none;max-height:120px;border-radius:20px}
 import {cfg,turn} from "./firebase-config.js";
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,sendPasswordResetEmail,EmailAuthProvider,linkWithCredential} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {getFirestore,doc,getDoc,setDoc,collection,addDoc,query,where,orderBy,limit,onSnapshot,getDocs,updateDoc,deleteDoc} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getFirestore,doc,getDoc,setDoc,collection,addDoc,query,where,orderBy,limit,onSnapshot,getDocs,updateDoc,deleteDoc,runTransaction} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const $=i=>document.getElementById(i);
 const COL=["#ff7a59","#a26bff","#22c1c3","#f2b134","#e85d9a","#5b8def"];
@@ -141,10 +157,12 @@ if(cfg.apiKey.startsWith("PASTE")){fail("Не заполнен файл firebase
 else{
 const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);
 let me,myCode,myNick,nicks={},links={},unsubs=[],unChat=null,pair=null,started=false;
+const jl=k=>{try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return {}}},js=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+let hid=jl("hid"),al=jl("al"),rn={};
 
 const nickOf=async u=>{
   if(nicks[u])return nicks[u];
-  try{const d=await getDoc(doc(db,"users",u)),v=d.data()||{};nicks[u]=v.nick||"Гость";avs[u]=v.ava||"";bios[u]=v.bio||""}catch(e){nicks[u]="Гость"}
+  try{const d=await getDoc(doc(db,"users",u)),v=d.data()||{};rn[u]=v.nick||"Гость";nicks[u]=al[u]||rn[u];avs[u]=v.ava||"";bios[u]=v.bio||""}catch(e){nicks[u]="Гость"}
   return nicks[u];
 };
 
@@ -170,14 +188,14 @@ async function initNotif(){
 }
 let wc=0;
 function home(){ping();if(!wc){wc=1;watchCalls();watchStk();watchGroups();initNotif()}
-  $("mynick").textContent=myNick;$("myid").textContent=fmt(myCode);show("s-home");
+  $("myid").textContent="@"+myNick;show("s-home");
   if(unsubs.length){renderList();return}
   for(const f of ["a","b"])unsubs.push(onSnapshot(query(collection(db,"links"),where(f,"==",me)),s=>{
     s.docs.forEach(d=>{const v=d.data();links[d.id]={u:v.a===me?v.b:v.a,chat:!!v.chat}});renderList();
   }));
   renderList();
 }
-function setTab(n){["1","2","3"].forEach(k=>{$("t"+k).classList.toggle("on",k==n);$("p"+k).classList.toggle("on",k==n)})}
+function setTab(n){["1","2","3"].forEach(k=>{$("t"+k).classList.toggle("on",k==n);$("p"+k).classList.toggle("on",k==n)});$("dots").style.visibility=n==1?"visible":"hidden"}
 const pv={},pw={};
 let lo={};try{lo=JSON.parse(localStorage.getItem("lo")||"{}")}catch(e){}
 const mark=k=>{lo[k]=Date.now();try{localStorage.setItem("lo",JSON.stringify(lo))}catch(e){}};
@@ -197,12 +215,17 @@ const hhmm=t=>{const d=new Date(t),n=new Date();return d.toDateString()==n.toDat
 async function renderList(){
   const all=Object.values(links);
   for(const l of all)await nickOf(l.u);
-  const items=[...groups.map(g=>({g})),...all];
+  let items=[...groups.map(g=>({g})),...all];
   items.forEach(watchPv);
   const lt=l=>((pv[keyOf(l)]||[])[0]||{ts:0}).ts;
-  items.sort((x,y)=>lt(y)-lt(x));
+  items.sort((x,y)=>lt(y)-lt(x));items=items.filter(l=>{const h=hid[keyOf(l)];return !h||lt(l)>h});
   const box=$("list");box.innerHTML="";
-  if(!items.length){const e=document.createElement("div");e.className="empty";e.textContent="Пока нет чатов. Откройте «Найти друзей» и введите ID друга.";box.appendChild(e);return}
+  if(!items.length){const e=document.createElement("div");e.className="empty";
+const ic=document.createElement("div");ic.className="eico";ic.textContent="🪐";
+const tt=document.createElement("div");tt.style.cssText="font-size:18px;font-weight:700;color:var(--txt);margin:8px 0 4px";tt.textContent="Здесь пока тихо";
+const ds=document.createElement("div");ds.textContent="Найдите друга по имени пользователя и начните общение.";
+const bt=document.createElement("button");bt.className="btn";bt.style.marginTop="16px";bt.textContent="✨ Найти друзей";bt.onclick=()=>setTab(2);
+e.append(ic,tt,ds,bt);box.appendChild(e);return}
   items.forEach(l=>{
     const ms=pv[keyOf(l)]||[],last=ms[0]||null,n0=cnt(l);
     const r=document.createElement("div");r.className="row";
@@ -217,19 +240,39 @@ async function renderList(){
       if(n0){const bd=document.createElement("div");bd.textContent=n0>99?"99+":n0;bd.style.cssText="background:#25d366;color:#fff;font-size:13px;font-weight:700;min-width:22px;height:22px;border-radius:11px;padding:0 6px;display:flex;align-items:center;justify-content:center";rc.appendChild(bd)}
       r.appendChild(rc);
     }
-    r.onclick=()=>l.g?openChat(null,l.g):openChat(l.u);box.appendChild(r);
+    let lp=0,tm=null;
+    const del=()=>{if(lp)return;lp=1;clearTimeout(tm);if(navigator.vibrate)navigator.vibrate(30);
+      if(confirm((l.g?"Удалить группу «"+l.g.name+"» из списка?":"Удалить чат с "+nicks[l.u]+"?")+"\nОн появится снова, когда придёт новое сообщение.")){hid[keyOf(l)]=Date.now();js("hid",hid);renderList()}};
+    r.ontouchstart=()=>{lp=0;tm=setTimeout(del,550)};
+    ["ontouchend","ontouchmove","ontouchcancel"].forEach(e=>r[e]=()=>clearTimeout(tm));
+    r.oncontextmenu=ev=>{ev.preventDefault();del()};
+    r.onclick=()=>{if(lp){lp=0;return}l.g?openChat(null,l.g):openChat(l.u)};box.appendChild(r);
   });
 }
 async function addFriend(){
-  const c=$("addid").value.replace(/[^a-z0-9]/gi,"").toUpperCase();if(!c)return;
-  if(c===myCode){alert("Это ваш собственный ID.");return}
+  const k=$("addid").value.trim().replace(/^@/,"").toLowerCase();if(!k)return;
+  if(myNick&&k===myNick.toLowerCase()){alert("Это ваш собственный ник.");return}
   try{
-    const s=await getDocs(query(collection(db,"users"),where("code","==",c),limit(1)));
-    if(s.empty){alert("Пользователь с таким ID не найден.");return}
-    const d=s.docs[0].data(),o=d.uid;nicks[o]=d.nick;avs[o]=d.ava||"";bios[o]=d.bio||"";
+    const u=await getDoc(doc(db,"usernames",k));
+    if(!u.exists()){alert("Пользователь с таким ником не найден.");return}
+    const o=u.data().uid;await nickOf(o);
     await setDoc(doc(db,"links",pairId(me,o)),{a:me,b:o,ts:Date.now()},{merge:true});
     $("addid").value="";openChat(o);
-  }catch(e){alert("Не удалось добавить. Проверьте ID и интернет.")}
+  }catch(e){alert("Не удалось добавить. Проверьте ник и интернет.")}
+}
+const NICK_RE=/^[\p{L}\p{N}_.]{3,20}$/u;
+const NM={bad:"Ник: 3–20 символов, только буквы, цифры, _ и .",taken:"Этот ник уже занят",rules:"Нужно обновить правила Firestore (коллекция usernames)",net:"Нет связи. Попробуйте ещё раз"};
+async function claimNick(n){
+  if(!NICK_RE.test(n))return "bad";
+  const k=n.toLowerCase(),old=myNick?myNick.toLowerCase():null;
+  try{await runTransaction(db,async tx=>{
+    const r=doc(db,"usernames",k),s=await tx.get(r);
+    let o=null,os=null;if(old&&old!==k){o=doc(db,"usernames",old);os=await tx.get(o)}
+    if(s.exists()&&s.data().uid!==me)throw new Error("taken");
+    if(!s.exists())tx.set(r,{uid:me});
+    if(os&&os.exists()&&os.data().uid===me)tx.delete(o);
+  });return "ok"}
+  catch(e){return e.message==="taken"?"taken":e.code==="permission-denied"?"rules":"net"}
 }
 let base=null,grp=null,groups=[];
 let unPeer=null,unTyp=null,lastT=0,peerSeen=0,peerTyp=0;
@@ -243,7 +286,7 @@ function pick(ref,w,mine){
   w.appendChild(b);
 }
 function openChat(u,g){
-  grp=g||null;curKey=g?"g"+g.id:pairId(me,u);base=g?["groups",g.id]:["dms",pairId(me,u)];pair=g?null:pairId(me,u);peerSeen=0;peerTyp=0;$("ca").style.display=$("cv").style.display=g?"none":"";
+  grp=g||null;curKey=g?"g"+g.id:pairId(me,u);if(hid[curKey]){delete hid[curKey];js("hid",hid)}base=g?["groups",g.id]:["dms",pairId(me,u)];pair=g?null:pairId(me,u);peerSeen=0;peerTyp=0;$("ca").style.display=$("cv").style.display=g?"none":"";
   if(g){$("cname").textContent=g.name;$("cstat").textContent=g.members.length+" участн.";$("cav").style.background=col(g.id);$("cav").textContent="👥"}else{$("cname").textContent=nicks[u]||"Гость";$("cstat").textContent="";mkav($("cav"),nicks[u],u)}
   show("s-chat");$("log").innerHTML="";
   if(unChat)unChat();if(unPeer)unPeer();if(unTyp)unTyp();
@@ -363,8 +406,9 @@ async function send(){
   if(!await post({text:t.slice(0,2000)}))i.value=t;
 }
 $("nickok").onclick=async()=>{
-  const n=$("nick").value.trim();if(!n)return;
-  try{await setDoc(doc(db,"users",me),{uid:me,nick:n,nickl:n.toLowerCase(),code:myCode});myNick=n;nicks[me]=n;home()}
+  const n=$("nick").value.trim();$("nerr").textContent="";if(!n)return;
+  const r=await claimNick(n);if(r!=="ok"){$("nerr").textContent=NM[r];return}
+  try{await setDoc(doc(db,"users",me),{uid:me,nick:n,nickl:n.toLowerCase()},{merge:true});myNick=n;nicks[me]=n;home()}
   catch(e){alert("Не удалось сохранить ник.")}
 };
 const TH=[
@@ -405,13 +449,32 @@ $("sq").oninput=function(){
   sT=setTimeout(async()=>{try{
     const s=await getDocs(query(collection(db,"users"),where("nickl",">=",q),where("nickl","<=",q+"\uf8ff"),limit(10)));
     const b=$("sres");b.innerHTML="";let n=0;
-    s.docs.forEach(d=>{const v=d.data();if(v.uid===me)return;n++;nicks[v.uid]=v.nick;avs[v.uid]=v.ava||"";bios[v.uid]=v.bio||"";
+    s.docs.forEach(d=>{const v=d.data();if(v.uid===me)return;n++;rn[v.uid]=v.nick;nicks[v.uid]=al[v.uid]||v.nick;avs[v.uid]=v.ava||"";bios[v.uid]=v.bio||"";
       const r=document.createElement("div");r.className="row";const a=document.createElement("div");a.className="av";mkav(a,v.nick,v.uid);const t=document.createElement("div");t.textContent=v.nick;
       if(v.bio){const x=document.createElement("div");x.className="dim";x.textContent=v.bio;t.appendChild(x)}
       r.append(a,t);r.onclick=async()=>{try{await setDoc(doc(db,"links",pairId(me,v.uid)),{a:me,b:v.uid,ts:Date.now()},{merge:true});openChat(v.uid)}catch(e){alert("Не удалось добавить.")}};b.appendChild(r)});
     if(!n){const e=document.createElement("div");e.className="empty";e.textContent="Никого не найдено";b.appendChild(e)}
   }catch(e){}},350)
 };
+$("dots").onclick=()=>$("menu").style.display="block";
+$("menu").onclick=()=>$("menu").style.display="none";
+let pvu=null;
+function openPv(){
+  if(grp||!pair)return;pvu=pair.split("__").find(x=>x!==me);
+  mkav($("pvav"),nicks[pvu],pvu);$("pvhint").style.display=avs[pvu]?"":"none";
+  $("pvreal").textContent="@"+(rn[pvu]||nicks[pvu]);$("pvbio").textContent=bios[pvu]||"";
+  $("pvname").value=al[pvu]||"";$("pvname").placeholder=rn[pvu]||nicks[pvu];$("pview").style.display="flex";
+}
+function setAlias(v){
+  const n=v.trim();if(n)al[pvu]=n;else delete al[pvu];js("al",al);
+  nicks[pvu]=al[pvu]||rn[pvu]||nicks[pvu];
+  $("cname").textContent=nicks[pvu];mkav($("cav"),nicks[pvu],pvu);renderList();$("pview").style.display="none";
+}
+$("cav").onclick=openPv;$("chead").onclick=openPv;
+$("pvsave").onclick=()=>setAlias($("pvname").value);$("pvreset").onclick=()=>setAlias("");
+$("pview").onclick=e=>{if(e.target===$("pview"))$("pview").style.display="none"};
+$("pvav").onclick=()=>{if(avs[pvu]){$("viewimg").src=avs[pvu];$("viewer").style.display="flex"}};
+$("viewer").onclick=()=>$("viewer").style.display="none";
 $("t1").onclick=()=>setTab(1);$("t2").onclick=()=>setTab(2);$("t3").onclick=()=>{setTab(3);profile()};
 $("pavb").onclick=()=>$("pavf").click();
 $("pavf").onchange=async function(){
@@ -424,11 +487,12 @@ $("pavf").onchange=async function(){
 };
 $("psave").onclick=async()=>{
   const n=$("pnick").value.trim()||myNick,b=$("pbio").value.trim();
-  try{await setDoc(doc(db,"users",me),{uid:me,nick:n,nickl:n.toLowerCase(),code:myCode,bio:b,ava:avs[me]||""},{merge:true});myNick=n;nicks[me]=n;myBio=b;$("mynick").textContent=n;$("psave").textContent="Сохранено ✓";setTimeout(()=>$("psave").textContent="Сохранить",1500)}
+  if(n!==myNick){const r=await claimNick(n);if(r!=="ok"){alert(NM[r]);return}}
+  try{await setDoc(doc(db,"users",me),{uid:me,nick:n,nickl:n.toLowerCase(),bio:b,ava:avs[me]||""},{merge:true});myNick=n;nicks[me]=n;myBio=b;$("myid").textContent="@"+n;$("psave").textContent="Сохранено ✓";setTimeout(()=>$("psave").textContent="Сохранить",1500)}
   catch(e){alert("Не удалось сохранить.")}
 };
 $("addok").onclick=addFriend;
-$("cp").onclick=()=>{try{navigator.clipboard.writeText(fmt(myCode));$("cp").textContent="Скопировано"}catch(e){$("cp").textContent=fmt(myCode)}setTimeout(()=>$("cp").textContent="Копировать",1500)};
+$("cp").onclick=()=>{try{navigator.clipboard.writeText(myNick);$("cp").textContent="Скопировано"}catch(e){$("cp").textContent=myNick}setTimeout(()=>$("cp").textContent="Копировать",1500)};
 $("back").onclick=()=>{if(unChat){unChat();unChat=null}if(unPeer)unPeer();if(unTyp)unTyp();pair=null;base=null;grp=null;curKey=null;home()};
 $("send").onclick=send;
 $("in").addEventListener("input",()=>{const t=Date.now();if(pair&&t-lastT>2500){lastT=t;setDoc(doc(db,"dms",pair),{["t_"+me]:t},{merge:true}).catch(()=>{})}});
@@ -454,10 +518,12 @@ $("lout").onclick=()=>{if(confirm("Выйти из аккаунта?"))signOut(a
 onAuthStateChanged(auth,async u=>{
   if(!u){show("s-auth");return}
   if(started)return;started=true;
-  me=u.uid;myCode=me.slice(0,8).toUpperCase();
+  me=u.uid;
   try{
     const d=await getDoc(doc(db,"users",me));
-    if(d.exists()&&d.data().nick){myNick=d.data().nick;nicks[me]=myNick;myBio=d.data().bio||"";avs[me]=d.data().ava||"";home()}else show("s-nick");
+    if(d.exists()&&d.data().nick){myNick=d.data().nick;nicks[me]=myNick;myBio=d.data().bio||"";avs[me]=d.data().ava||"";
+      const r=await claimNick(myNick);
+      if(r==="bad"||r==="taken"){$("nerr").textContent="Выберите уникальный ник. "+NM[r];show("s-nick")}else home()}else show("s-nick");
   }catch(e){fail("Нет связи с базой. Проверьте интернет и правила Firestore.")}
 });
 }
