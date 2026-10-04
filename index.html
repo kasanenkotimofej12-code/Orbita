@@ -38,8 +38,8 @@ input:focus,textarea:focus{border-color:var(--q)}
 .add.on{display:flex}
 .add input{text-transform:uppercase}
 #log{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
-.msg{max-width:84%;padding:8px 12px;border:1px solid var(--line);background:var(--card);border-radius:18px 18px 18px 4px;align-self:flex-start}
-.msg.me{align-self:flex-end;border-color:transparent;background:var(--mine,linear-gradient(135deg,#3b2a78,#5a2f63));border-radius:18px 18px 4px 18px}
+.msg{max-width:84%;padding:8px 12px;border:1px solid var(--line);background:var(--card);border-radius:var(--br,18px) var(--br,18px) var(--br,18px) 4px;align-self:flex-start}
+.msg.me{align-self:flex-end;border-color:transparent;background:var(--mine,linear-gradient(135deg,#3b2a78,#5a2f63));border-radius:var(--br,18px) var(--br,18px) 4px var(--br,18px)}
 .tx{white-space:pre-wrap;word-wrap:break-word}
 .tm{font-size:11px;color:var(--dim);text-align:right}
 .empty{margin:auto;color:var(--dim);text-align:center;padding:20px}
@@ -102,6 +102,21 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .bnav .ic{position:relative;padding:2px 0;display:flex}
 .bnav .on{color:var(--p);font-weight:700;background:var(--line);background:color-mix(in srgb,var(--p) 22%,transparent)}
 #nbadge{display:none;position:absolute;top:-6px;right:-12px;min-width:18px;height:18px;border-radius:9px;background:var(--p);color:#0b1117;font-size:11px;font-weight:700;align-items:center;justify-content:center;padding:0 4px}
+.cardx{background:var(--card);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.ct{color:var(--p);font-weight:700}
+.rg{display:flex;align-items:center;gap:12px}.rg input{flex:1;padding:0;border:0;background:none}.rg b{min-width:28px;text-align:right}
+.hs{display:flex;gap:10px;overflow-x:auto;padding:4px 2px}
+.tc{flex:none;width:84px;height:128px;border-radius:14px;position:relative;border:2px solid transparent;overflow:hidden;background-size:cover;padding:0}.tc.on{border-color:var(--p)}
+.tc i{position:absolute;height:22px;border-radius:12px}.tc span{position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:12px}
+.wp{flex:none;width:64px;height:90px;border-radius:12px;border:2px solid transparent;background-size:cover;background-position:center;color:var(--dim);font-size:12px;display:flex;align-items:center;justify-content:center;background-color:var(--bg);font-size:26px}.wp.on{border-color:var(--p)}
+.lv{display:flex;gap:10px}.lv button{flex:1;border:2px solid var(--line);border-radius:14px;background:none;color:var(--txt);font:inherit;padding:12px}.lv button.on{border-color:var(--p)}
+.pbox{border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;background-color:var(--card)}
+.pb{max-width:80%;padding:8px 12px;font-size:var(--fs,16px)}
+.pb.in{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--br,18px) var(--br,18px) var(--br,18px) 4px}
+.pb.out{align-self:flex-end;color:#fff;background:var(--mine,linear-gradient(135deg,#3b2a78,#5a2f63));border-radius:var(--br,18px) var(--br,18px) 4px var(--br,18px)}
+.btn2{background:none;border:0;color:var(--p);font:inherit;text-align:left;padding:6px 0;font-weight:600}
+#list.l3 .row .dim{white-space:normal!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.brand .ring.emo{border:0;width:auto;height:auto;font-size:24px;line-height:1}.brand .ring.emo:after{display:none}
 </style>
 </head>
 <body>
@@ -151,8 +166,15 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <div class="sec" id="sec-acc"><div id="pemail" style="font-size:14px"></div>
     <div id="lnk" style="display:none;flex-direction:column;gap:8px"><input id="lem" type="email" placeholder="Почта"><input id="lpw" type="password" placeholder="Пароль (от 6 символов)"><button class="btn" id="lbtn">Сохранить аккаунт</button></div>
     <button class="btn" id="lout" style="background:var(--card);border:1px solid var(--line)">Выйти из аккаунта</button></div>
-<div class="sec" id="sec-chat"><div class="dim">Тема оформления</div><div id="themes" style="display:flex;flex-wrap:wrap;gap:10px"></div>
-    <div class="dim">Размер текста сообщений</div><input type="range" id="fsz" min="14" max="22" step="1" style="padding:0;border:0;background:none"></div>
+<div class="sec" id="sec-chat">
+<div class="pbox" id="prev"><div class="pb in">Доброе утро! 👋</div><div class="pb out">В Токио утро 😎</div></div>
+<div class="cardx"><div class="ct">Размер текста</div><div class="rg"><input type="range" id="fsz" min="12" max="24"><b id="fszv"></b></div></div>
+<div class="cardx"><div class="ct">Углы блоков с сообщениями</div><div class="rg"><input type="range" id="brs" min="0" max="26"><b id="brsv"></b></div></div>
+<div class="cardx"><div class="ct">Обои чата</div><div id="wps" class="hs"></div><button class="btn2" id="wpup">🖼 Выбрать своё фото</button><input type="file" id="wpf" accept="image/*" hidden></div>
+<div class="cardx"><div class="ct">Цветовая тема</div><div id="themes" class="hs"></div><button class="btn2" id="dnb"></button></div>
+<div class="cardx"><div class="ct">Список чатов</div><div class="lv"><button data-l="2">Двустрочный</button><button data-l="3">Трёхстрочный</button></div></div>
+<div class="cardx"><div class="ct">Логотип приложения</div><div id="lgs" class="hs"></div><div class="dim">Значок в шапке приложения.</div></div>
+</div>
 <div class="sec" id="sec-priv"><label class="tg"><span>Показывать «в сети»</span><input type="checkbox" class="sw" data-k="seen"></label><label class="tg"><span>Показывать «печатает…»</span><input type="checkbox" class="sw" data-k="typ"></label><div class="dim">Если выключить, другие не увидят, когда вы онлайн или печатаете.</div></div>
 <div class="sec" id="sec-notif"><label class="tg"><span>Уведомления о сообщениях</span><input type="checkbox" class="sw" data-k="nm"></label><label class="tg"><span>Уведомления о звонках</span><input type="checkbox" class="sw" data-k="nc"></label></div>
 <div class="sec" id="sec-data"><div class="dim" id="dinfo"></div><button class="btn" id="dres" style="background:var(--card);border:1px solid var(--line)">Вернуть скрытые чаты и сообщения</button><button class="btn" id="dnam" style="background:var(--card);border:1px solid var(--line)">Сбросить свои имена контактов</button></div>
@@ -656,12 +678,44 @@ function openSet(k,title){
   document.querySelectorAll("#s-set .sw").forEach(x=>x.checked=!!gs(x.dataset.k));
   $("fsz").value=gs("sz",16);
   $("dinfo").textContent="Скрытых чатов: "+Object.keys(hid).length+" · Скрытых сообщений: "+Object.keys(dmh).length+" · Своих имён контактов: "+Object.keys(al).length;
-  profile();show("s-set");
+  profile();if(k==="chat")chatSetUI();show("s-set");
 }
 document.querySelectorAll(".srow").forEach(r=>r.onclick=()=>openSet(r.dataset.k,r.textContent.trim()));
 document.querySelectorAll("#s-set .sw").forEach(x=>x.onchange=()=>{ss(x.dataset.k,x.checked?1:0);
   if(x.dataset.k==="bg"&&BM){try{x.checked?BM.enable():BM.disable()}catch(e){}}if(x.dataset.k==="seen")ping()});
-$("fsz").oninput=()=>{ss("sz",+$("fsz").value);applySz()};
+const WPS=[{v:""},{v:"linear-gradient(160deg,#1a1038,#3b1f5e)"},{v:"linear-gradient(160deg,#06141c,#0b4d5c)"},{v:"linear-gradient(160deg,#0a140d,#1f5a35)"},{v:"linear-gradient(160deg,#2a0f1a,#7a2a3a)"},{v:"linear-gradient(160deg,#101018,#2a2a3a)"},{v:"radial-gradient(circle at 30% 20%,rgba(255,122,89,.7),transparent 50%),linear-gradient(160deg,#17152f,#2a1450)"}];
+const LG=["ring","🪐","⭐","🌙","🚀","🔥"];
+const wpImg=()=>{try{return localStorage.getItem("wpi")||""}catch(e){return ""}};
+const wpv=()=>{const k=gs("wp",0);return k==="c"?(wpImg()?"url("+wpImg()+")":""):(WPS[k]||WPS[0]).v};
+function applyWp(){const v=wpv();[$("log"),$("prev")].forEach(e=>{e.style.backgroundImage=v;e.style.backgroundSize=v?"cover":"";e.style.backgroundPosition="center"})}
+const applyBr=()=>document.documentElement.style.setProperty("--br",gs("br",18)+"px");
+const applyL=()=>$("list").classList.toggle("l3",gs("l",2)==3);
+function applyLogo(){const v=gs("lg","ring");document.querySelectorAll(".brand .ring").forEach(r=>{r.classList.toggle("emo",v!=="ring");r.textContent=v==="ring"?"":v})}
+const isLight=()=>TH[thi].n==="Светлая",tIdx=n=>TH.findIndex(t=>t.n===n);
+function chatSetUI(){
+  $("fsz").value=gs("sz",16);$("fszv").textContent=gs("sz",16);$("brs").value=gs("br",18);$("brsv").textContent=gs("br",18);
+  const w=$("wps");w.innerHTML="";
+  const ws=WPS.map((x,i)=>({i,v:x.v,t:i?"":"Нет"}));if(wpImg())ws.push({i:"c",v:"url("+wpImg()+")",t:""});
+  ws.forEach(x=>{const d=document.createElement("button");d.className="wp"+(gs("wp",0)==x.i?" on":"");d.style.backgroundImage=x.v;d.textContent=x.t;d.style.fontSize="13px";d.onclick=()=>{ss("wp",x.i);applyWp();chatSetUI()};w.appendChild(d)});
+  const th=$("themes");th.innerHTML="";
+  TH.forEach((t,i)=>{const d=document.createElement("button");d.className="tc"+(i==thi?" on":"");d.style.backgroundColor=t.bg;if(t.bgi&&t.bgi!=="none")d.style.backgroundImage=t.bgi;
+    d.innerHTML='<i style="top:18px;right:10px;left:24px;background:'+(t.mine||"linear-gradient(135deg,"+t.p+","+t.q+")")+'"></i><i style="top:50px;left:10px;right:24px;background:'+t.card+'"></i><span style="color:'+t.txt+'">'+t.n+'</span>';
+    d.onclick=()=>{theme(i);chatSetUI()};th.appendChild(d)});
+  $("dnb").textContent=isLight()?"🌙 Переключить на ночную тему":"☀️ Переключить на дневную тему";
+  document.querySelectorAll(".lv button").forEach(b=>b.classList.toggle("on",gs("l",2)==b.dataset.l));
+  const lg=$("lgs");lg.innerHTML="";
+  LG.forEach(v=>{const d=document.createElement("button");d.className="wp"+(gs("lg","ring")===v?" on":"");d.style.width="56px";d.style.height="56px";if(v==="ring")d.innerHTML='<span class="ring"></span>';else d.textContent=v;d.onclick=()=>{ss("lg",v);applyLogo();chatSetUI()};lg.appendChild(d)});
+}
+$("fsz").oninput=()=>{ss("sz",+$("fsz").value);applySz();$("fszv").textContent=$("fsz").value};
+$("brs").oninput=()=>{ss("br",+$("brs").value);applyBr();$("brsv").textContent=$("brs").value};
+$("dnb").onclick=()=>{theme(tIdx(isLight()?"Тёмная":"Светлая"));chatSetUI()};
+document.querySelectorAll(".lv button").forEach(b=>b.onclick=()=>{ss("l",+b.dataset.l);applyL();chatSetUI()});
+$("wpup").onclick=()=>$("wpf").click();
+$("wpf").onchange=async function(){const f=this.files[0];this.value="";if(!f)return;
+  try{const im=await loadImg(f),k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+    localStorage.setItem("wpi",c.toDataURL("image/jpeg",.7));ss("wp","c");applyWp();chatSetUI()}
+  catch(e){alert("Не удалось поставить обои. Попробуйте другое фото.")}};
+applyWp();applyBr();applyL();applyLogo();
 $("setback").onclick=()=>home();
 $("dres").onclick=()=>{hid={};dmh={};js("hid",hid);js("dmh",dmh);location.reload()};
 $("dnam").onclick=()=>{al={};js("al",al);location.reload()};
