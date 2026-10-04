@@ -117,6 +117,13 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .btn2{background:none;border:0;color:var(--p);font:inherit;text-align:left;padding:6px 0;font-weight:600}
 #list.l3 .row .dim{white-space:normal!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .brand .ring.emo{border:0;width:auto;height:auto;font-size:24px;line-height:1}.brand .ring.emo:after{display:none}
+.lrow{display:flex;justify-content:space-between;align-items:center;width:100%;background:var(--card);border:0;border-radius:14px;color:var(--txt);font:inherit;font-size:17px;padding:16px;margin-bottom:8px}
+.quote{border-left:3px solid var(--p);background:rgba(0,0,0,.22);border-radius:8px;padding:4px 8px;margin-bottom:4px;font-size:13px}
+.stb{flex:none;background:none;border:0;color:var(--txt);display:flex;flex-direction:column;align-items:center;gap:4px;font:inherit;width:70px}
+.stp{position:absolute;right:-2px;bottom:-2px;width:20px;height:20px;border-radius:50%;background:var(--p);color:#0b1117;font-size:14px;display:flex;align-items:center;justify-content:center;font-weight:700}
+#rbar{display:none;align-items:center;gap:10px;padding:8px 14px;border-top:1px solid var(--line);background:var(--card);flex:none}
+#csb{display:none;align-items:center;gap:8px;padding:6px 12px;border-bottom:1px solid var(--line);flex:none}
+#csb input{flex:1}
 </style>
 </head>
 <body>
@@ -144,7 +151,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 
 <div class="scr" id="s-home">
   <header><div class="brand"><span class="ring"></span>Орбита</div><button class="ib" id="dots">⋮</button></header>
-    <div id="p1" class="pane on"><div class="sbar"><span>🔍</span><input id="csq" placeholder="Поиск по чатам" autocomplete="off"></div><div class="chips"><button class="chip on" data-f="all">Все</button><button class="chip" data-f="unread">Непрочитанное</button><button class="chip" data-f="groups">Группы</button></div><div id="list"></div><button id="fab" aria-label="Найти друзей"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8v5M9.5 10.5h5"/></svg></button></div>
+    <div id="p1" class="pane on"><div id="stbar" class="hs" style="padding:4px 14px 6px;flex:none"></div><div class="sbar"><span>🔍</span><input id="csq" placeholder="Поиск по чатам" autocomplete="off"></div><div class="chips"><button class="chip on" data-f="all">Все</button><button class="chip" data-f="unread">Непрочитанное</button><button class="chip" data-f="groups">Группы</button></div><div id="list"></div><button id="fab" aria-label="Найти друзей"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8v5M9.5 10.5h5"/></svg></button></div>
   <div id="p2" class="pane">
     <div class="add on" id="addbox"><input id="addid" placeholder="Имя пользователя" autocomplete="off"><button class="btn" id="addok">Добавить</button></div>
         <div class="me-id"><div><div class="dim">Ваше имя пользователя</div><b id="myid"></b></div><button id="cp">Копировать</button></div>
@@ -157,7 +164,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
     <button class="btn" id="psave">Сохранить</button>
     
   </div>
-<div id="p4" class="pane" style="padding:16px;gap:6px"><div class="dim" style="margin-top:8px">Настройки</div><div class="srow" data-k="acc"><span class="sic" style="background:#2b8cf0">👤</span>Аккаунт</div><div class="srow" data-k="chat"><span class="sic" style="background:#f0a030">💬</span>Настройки чатов</div><div class="srow" data-k="priv"><span class="sic" style="background:#3cb54a">🔑</span>Конфиденциальность</div><div class="srow" data-k="notif"><span class="sic" style="background:#e5484d">🔊</span>Уведомления</div><div class="srow" data-k="data"><span class="sic" style="background:#4a6cf0">📊</span>Данные и память</div><div class="srow" data-k="bat"><span class="sic" style="background:#f07a30">🔋</span>Энергосбережение</div></div>
+<div id="p4" class="pane" style="padding:16px;gap:6px"><div class="dim" style="margin-top:8px">Настройки</div><div class="srow" data-k="acc"><span class="sic" style="background:#2b8cf0">👤</span>Аккаунт</div><div class="srow" data-k="chat"><span class="sic" style="background:#f0a030">💬</span>Настройки чатов</div><div class="srow" data-k="priv"><span class="sic" style="background:#3cb54a">🔑</span>Конфиденциальность</div><div class="srow" data-k="notif"><span class="sic" style="background:#e5484d">🔊</span>Уведомления</div><div class="srow" data-k="data"><span class="sic" style="background:#4a6cf0">📊</span>Данные и память</div><div class="srow" data-k="bat"><span class="sic" style="background:#f07a30">🔋</span>Энергосбережение</div><div class="srow" data-k="lang"><span class="sic" style="background:#a259e8">🌐</span><span>Язык</span><span class="rv" id="langv" style="margin-left:auto;color:var(--p)"></span></div></div>
 <div class="bnav"><button id="t1" class="on"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h8A2.5 2.5 0 0 1 16 5.5v4a2.5 2.5 0 0 1-2.5 2.5H9l-3.5 3v-3A2.5 2.5 0 0 1 3 9.5z"/><path d="M19 9.5A2.5 2.5 0 0 1 21 12v4a2.5 2.5 0 0 1-2.5 2.5V21L15 18.5h-4A2.5 2.5 0 0 1 8.5 16"/></svg><span id="nbadge"></span></span>Чаты</button><button id="t2" style="display:none"></button><button id="t4"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.8"/><circle cx="12" cy="12" r="6.2"/><circle cx="12" cy="12" r="8.6" stroke-width="2.4" stroke-dasharray="3.4 3.4"/></svg></span>Настройки</button><button id="t3"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18c1.2-2.4 3.2-3.5 5.5-3.5s4.3 1.1 5.5 3.5"/></svg></span>Профиль</button></div>
 </div>
 
@@ -175,6 +182,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <div class="cardx"><div class="ct">Список чатов</div><div class="lv"><button data-l="2">Двустрочный</button><button data-l="3">Трёхстрочный</button></div></div>
 <div class="cardx"><div class="ct">Логотип приложения</div><div id="lgs" class="hs"></div><div class="dim" id="icnote">Иконка приложения на рабочем столе и логотип в шапке.</div></div>
 </div>
+<div class="sec" id="sec-lang"><div id="langs"></div></div>
 <div class="sec" id="sec-priv"><label class="tg"><span>Показывать «в сети»</span><input type="checkbox" class="sw" data-k="seen"></label><label class="tg"><span>Показывать «печатает…»</span><input type="checkbox" class="sw" data-k="typ"></label><div class="dim">Если выключить, другие не увидят, когда вы онлайн или печатаете.</div></div>
 <div class="sec" id="sec-notif"><label class="tg"><span>Уведомления о сообщениях</span><input type="checkbox" class="sw" data-k="nm"></label><label class="tg"><span>Уведомления о звонках</span><input type="checkbox" class="sw" data-k="nc"></label></div>
 <div class="sec" id="sec-data"><div class="dim" id="dinfo"></div><button class="btn" id="dres" style="background:var(--card);border:1px solid var(--line)">Вернуть скрытые чаты и сообщения</button><button class="btn" id="dnam" style="background:var(--card);border:1px solid var(--line)">Сбросить свои имена контактов</button></div>
@@ -184,11 +192,12 @@ input,textarea{-webkit-user-select:text;user-select:text}
   <header><button class="ib" id="gback">←</button><div class="brand" style="font-size:18px">Новая группа</div></header>
   <div style="padding:16px;display:flex;flex-direction:column;gap:12px;overflow-y:auto"><input id="gname" maxlength="30" placeholder="Название группы"><div class="dim">Выберите участников из друзей</div><div id="gfr"></div><button class="btn" id="gmake">Создать</button></div>
 </div>
-<div class="scr" id="s-chat"><div id="selbar"><button class="ib" id="selx">✕</button><div id="seln" style="font-weight:700;font-size:18px;flex:1">Выбрано 0</div><button class="ib" id="selcp">📋</button><button class="ib" id="seldel">🗑</button></div>
-  <header><button class="ib" id="back">←</button><div class="av" id="cav" style="width:36px;height:36px;font-size:15px"></div><div class="brand" id="chead" style="font-size:18px;flex-direction:column;align-items:flex-start;gap:0"><span id="cname"></span><span id="cstat" class="dim" style="font-weight:400"></span></div><button class="ib" id="cv" aria-label="Видеозвонок"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="13" height="13" rx="2.5"/><path d="M15.5 10l6-3.5v11l-6-3.5z"/></svg></button><button class="ib" id="ca" aria-label="Звонок"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h3.2l1.8 4.8-2.4 1.5a11 11 0 0 0 6.6 6.6l1.5-2.4 4.8 1.8V19a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3 5.7 2 2 0 0 1 5 3.5z"/></svg></button></header>
+<div class="scr" id="s-chat"><div id="selbar"><button class="ib" id="selx">✕</button><div id="seln" style="font-weight:700;font-size:18px;flex:1">Выбрано 0</div><button class="ib" id="selre">↩</button><button class="ib" id="selfw">↪</button><button class="ib" id="seled">✏️</button><button class="ib" id="selcp">📋</button><button class="ib" id="seldel">🗑</button></div>
+  <header><button class="ib" id="back">←</button><div class="av" id="cav" style="width:36px;height:36px;font-size:15px"></div><div class="brand" id="chead" style="font-size:18px;flex-direction:column;align-items:flex-start;gap:0"><span id="cname"></span><span id="cstat" class="dim" style="font-weight:400"></span></div><button class="ib" id="cv" aria-label="Видеозвонок"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="13" height="13" rx="2.5"/><path d="M15.5 10l6-3.5v11l-6-3.5z"/></svg></button><button class="ib" id="ca" aria-label="Звонок"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h3.2l1.8 4.8-2.4 1.5a11 11 0 0 0 6.6 6.6l1.5-2.4 4.8 1.8V19a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 3 5.7 2 2 0 0 1 5 3.5z"/></svg></button><button class="ib" id="cmore" aria-label="Меню">⋮</button></header>
+  <div id="csb"><input id="csi" placeholder="Поиск по сообщениям" autocomplete="off"><span id="csn" class="dim"></span><button class="ib" id="csx">✕</button></div>
   <div id="log"></div>
   <div id="panel" style="display:none;border-top:1px solid var(--line);max-height:230px;overflow-y:auto;padding:0 8px 8px"><div class="tabs"><button id="pe" class="on">Смайлики</button><button id="ps">Стикеры</button></div><div id="pbody" style="display:flex;flex-wrap:wrap;gap:6px;padding-top:8px"></div></div>
-<footer><button class="ib" id="em">😊</button><button class="ib" id="ph">📷</button><input type="file" id="sf" accept="image/*" hidden><input type="file" id="pf" accept="image/*" hidden><textarea id="in" rows="1" placeholder="Сообщение…"></textarea><button id="send" style="display:none">➤</button><button id="mic" class="ib" style="width:44px;height:44px;touch-action:none;position:relative;z-index:2;background:var(--p);color:#0b1117;border:0">🎤</button><div id="rec"><span class="recdot"></span><span id="rect">0:00</span><span id="recl" style="margin-left:14px">‹ Влево — отмена</span></div></footer>
+<div id="rbar"><div id="rtxt" style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div><button class="ib" id="rx">✕</button></div><footer><button class="ib" id="em">😊</button><button class="ib" id="ph">📷</button><input type="file" id="sf" accept="image/*" hidden><input type="file" id="pf" accept="image/*,video/*" hidden><textarea id="in" rows="1" placeholder="Сообщение…"></textarea><button id="send" style="display:none">➤</button><button id="cam" class="ib" style="width:44px;height:44px;touch-action:none;position:relative;z-index:2;font-size:20px">⭕</button><button id="mic" class="ib" style="width:44px;height:44px;touch-action:none;position:relative;z-index:2;background:var(--p);color:#0b1117;border:0">🎤</button><div id="rec"><span class="recdot"></span><span id="rect">0:00</span><span id="recl" style="margin-left:14px">‹ Влево — отмена</span></div></footer>
 </div>
 
 <div id="ed" style="display:none;position:fixed;inset:0;z-index:9;flex-direction:column;background:#0b1117;color:#fff;padding-top:env(safe-area-inset-top,0px)">
@@ -202,12 +211,18 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <div id="dlg"><div class="card"><div style="font-size:20px;font-weight:700">Удалить сообщение</div><div class="dim" style="font-size:16px">Вы точно хотите удалить это сообщение?</div>
 <label id="drow" style="display:flex;align-items:center;gap:12px"><input type="checkbox" id="dchk" style="width:22px;height:22px;flex:none"><span id="dlab"></span></label>
 <div style="display:flex;justify-content:flex-end;gap:8px"><button class="tb" id="dno" style="color:var(--q)">Отмена</button><button class="tb" id="dok" style="color:#ff6b6b">Удалить</button></div></div></div>
-<div id="menu" style="display:none;position:fixed;inset:0;z-index:8"><div style="position:absolute;top:calc(64px + env(safe-area-inset-top,0px));right:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px;min-width:210px;box-shadow:0 8px 30px rgba(0,0,0,.45)"><button id="newg" class="mi">👥 Создать группу</button></div></div>
+<div id="sheet" style="display:none;position:fixed;inset:0;z-index:14;background:rgba(0,0,0,.55);align-items:flex-end"><div id="sheetb" style="width:100%;background:var(--bg);border-radius:24px 24px 0 0;padding:14px 14px calc(18px + env(safe-area-inset-bottom,0px));max-height:70%;overflow-y:auto"></div></div>
+<div id="cap" style="display:none;position:fixed;inset:0;z-index:12;background:#000;flex-direction:column;padding-top:env(safe-area-inset-top,0px)"><div style="padding:12px"><button class="ib" id="capx">✕</button></div><div id="capm" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"></div><div style="display:flex;gap:8px;padding:12px 12px calc(12px + env(safe-area-inset-bottom,0px))"><input id="capt" placeholder="Подпись…" maxlength="1000"><button class="btn" id="capok" style="width:auto;padding:12px 20px">➤</button></div></div>
+<div id="circw" style="display:none;position:fixed;inset:0;z-index:11;background:rgba(0,0,0,.65);flex-direction:column;align-items:center;justify-content:center;gap:12px;pointer-events:none;color:#fff"><video id="circp" playsinline muted style="width:240px;height:240px;border-radius:50%;object-fit:cover;transform:scaleX(-1);background:#000"></video><div id="circt" style="font-weight:700;font-size:18px">0:00</div><div>‹ Влево — отмена</div></div>
+<div id="stv" style="display:none;position:fixed;inset:0;z-index:13;background:#000;flex-direction:column;color:#fff;padding-top:env(safe-area-inset-top,0px)"><div id="stbars" style="display:flex;gap:4px;padding:10px 12px 6px"></div><div style="display:flex;align-items:center;gap:10px;padding:4px 12px"><div id="stwho" style="flex:1;font-weight:700"></div><button class="ib" id="stdel">🗑</button><button class="ib" id="stx">✕</button></div><div id="stmedia" style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"></div><div id="stcap" style="padding:12px 16px calc(16px + env(safe-area-inset-bottom,0px));text-align:center;font-size:16px;min-height:24px"></div></div>
+<div id="ginfo" style="display:none;position:fixed;inset:0;z-index:12;background:var(--bg);background-image:var(--bgi);flex-direction:column;padding-top:env(safe-area-inset-top,0px)"><header><button class="ib" id="ginx">←</button><div class="brand" style="font-size:20px">О группе</div></header><div style="flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px"><div style="display:flex;flex-direction:column;align-items:center;gap:8px"><div class="av" id="ginav" style="width:96px;height:96px;font-size:40px"></div><button class="btn2" id="ginava">Сменить аватарку</button><input type="file" id="gif" accept="image/*" hidden></div><input id="gin" maxlength="40"><button class="btn" id="ginsave">Сохранить название</button><div class="ct">Участники</div><div id="ginm"></div><button class="btn" id="ginlink" style="background:var(--card);border:1px solid var(--line)">🔗 Пригласить по ссылке</button><button class="btn" id="ginleave" style="background:var(--card);border:1px solid var(--line);color:#ff6b6b">Выйти из группы</button></div></div>
+<input type="file" id="stf" accept="image/*" hidden>
+<div id="menu" style="display:none;position:fixed;inset:0;z-index:8"><div style="position:absolute;top:calc(64px + env(safe-area-inset-top,0px));right:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:6px;min-width:210px;box-shadow:0 8px 30px rgba(0,0,0,.45)"><button id="newg" class="mi">👥 Создать группу</button><button id="joing" class="mi">🔗 Вступить в группу по коду</button></div></div>
 <div id="pview" style="display:none;position:fixed;inset:0;z-index:8;background:rgba(0,0,0,.6);align-items:flex-end"><div style="width:100%;background:var(--bg);background-image:var(--bgi);border-radius:24px 24px 0 0;padding:20px 20px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:10px">
 <div class="av" id="pvav" style="width:140px;height:140px;font-size:56px;cursor:pointer"></div><div class="dim" id="pvhint">Нажмите на фото, чтобы открыть</div>
 <div id="pvreal" style="font-weight:700;font-size:18px"></div><div class="dim" id="pvbio"></div>
 <div class="dim" style="align-self:flex-start">Имя для вас (видите только вы)</div><input id="pvname" maxlength="30">
-<div style="display:flex;gap:10px;width:100%"><button class="btn" id="pvsave" style="flex:1">Сохранить</button><button class="btn" id="pvreset" style="flex:1;background:var(--card);border:1px solid var(--line)">Сбросить</button></div></div></div>
+<div style="display:flex;gap:10px;width:100%"><button class="btn" id="pvsave" style="flex:1">Сохранить</button><button class="btn" id="pvblk" style="flex:1;background:var(--card);border:1px solid var(--line);color:#ff6b6b">🚫</button><button class="btn" id="pvreset" style="flex:1;background:var(--card);border:1px solid var(--line)">Сбросить</button></div></div></div>
 <div id="viewer" style="display:none;position:fixed;inset:0;z-index:10;background:#000;align-items:center;justify-content:center"><img id="viewimg" style="max-width:100%;max-height:100%;object-fit:contain"></div>
 <div id="callui" style="display:none;position:fixed;inset:0;z-index:9;flex-direction:column;align-items:center;color:#fff;background:linear-gradient(180deg,#0b1218,#101a24)">
 <video id="rv" autoplay playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0"></video>
@@ -219,6 +234,47 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <div class="cb"><button id="cmut">🎤</button><span id="cmutl">Отключить звук</span></div>
 <div class="cb" id="caccw"><button id="cacc" style="background:#2fbf71">📞</button>Принять</div>
 <div class="cb"><button id="cend" style="background:#e5484d">✕</button>Завершить</div></div></div>
+<script>
+(function(){
+const LANGS={ru:"Русский",en:"English",uk:"Українська",kk:"Қазақша",es:"Español"},CODES=["ru","en","uk","kk","es"];
+const ROWS=[["Язык","Language","Мова","Тіл","Idioma"],["Все", "All", "Усі", "Барлығы", "Todos"], ["Лес", "Forest", "Ліс", "Орман", "Bosque"], ["Нет", "None", "Немає", "Жоқ", "Ninguno"], ["Ник", "Nickname", "Нік", "Лақап ат", "Apodo"], ["Микс", "Mix", "Мікс", "Микс", "Mix"], ["Неон", "Neon", "Неон", "Неон", "Neón"], ["Чаты", "Chats", "Чати", "Чаттар", "Chats"], ["Войти", "Log in", "Увійти", "Кіру", "Entrar"], ["Гость", "Guest", "Гість", "Қонақ", "Invitado"], ["Закат", "Sunset", "Захід", "Күн батуы", "Atardecer"], ["Океан", "Ocean", "Океан", "Мұхит", "Océano"], ["Почта", "Email", "Пошта", "Пошта", "Correo"], ["Текст", "Text", "Текст", "Мәтін", "Texto"], ["Группы", "Groups", "Групи", "Топтар", "Grupos"], ["Звонки", "Calls", "Дзвінки", "Қоңыраулар", "Llamadas"], ["Звонок", "Call", "Дзвінок", "Қоңырау", "Llamada"], ["Космос", "Space", "Космос", "Ғарыш", "Espacio"], ["Начать", "Start", "Почати", "Бастау", "Empezar"], ["О себе", "About me", "Про себе", "Өзім туралы", "Sobre mí"], ["Отмена", "Cancel", "Скасувати", "Бас тарту", "Cancelar"], ["Стикер", "Sticker", "Стікер", "Стикер", "Sticker"], ["Тёмная", "Dark", "Темна", "Қараңғы", "Oscuro"], ["в сети", "online", "в мережі", "желіде", "en línea"], ["📷 Фото", "📷 Photo", "📷 Фото", "📷 Фото", "📷 Foto"], ["Аккаунт", "Account", "Акаунт", "Аккаунт", "Cuenta"], ["Ваш ник", "Your nickname", "Ваш нік", "Сіздің лақап атыңыз", "Tu apodo"], ["Динамик", "Speaker", "Динамік", "Динамик", "Altavoz"], ["Обычная", "Default", "Звичайна", "Қарапайым", "Normal"], ["Принять", "Accept", "Прийняти", "Қабылдау", "Aceptar"], ["Профиль", "Profile", "Профіль", "Профиль", "Perfil"], ["Светлая", "Light", "Світла", "Ашық", "Claro"], ["Создать", "Create", "Створити", "Жасау", "Crear"], ["Стикеры", "Stickers", "Стікери", "Стикерлер", "Stickers"], ["Удалить", "Delete", "Видалити", "Жою", "Eliminar"], ["Добавить", "Add", "Додати", "Қосу", "Añadir"], ["Сбросить", "Reset", "Скинути", "Қалпына келтіру", "Restablecer"], ["Смайлики", "Emoji", "Смайли", "Эмодзи", "Emojis"], ["Вызываем…", "Calling…", "Викликаємо…", "Қоңырау шалудамыз…", "Llamando…"], ["Завершить", "End call", "Завершити", "Аяқтау", "Colgar"], ["Настройки", "Settings", "Налаштування", "Баптаулар", "Ajustes"], ["Обои чата", "Chat wallpaper", "Шпалери чату", "Чат тұсқағазы", "Fondo del chat"], ["Повторить", "Retry", "Повторити", "Қайталау", "Reintentar"], ["Сообщения", "Messages", "Повідомлення", "Хабарламалар", "Mensajes"], ["Сохранить", "Save", "Зберегти", "Сақтау", "Guardar"], ["печатает…", "typing…", "друкує…", "жазуда…", "escribiendo…"], ["Копировать", "Copy", "Копіювати", "Көшіру", "Copiar"], ["Соединяем…", "Connecting…", "З’єднуємо…", "Қосылудамыз…", "Conectando…"], ["Сообщение…", "Message…", "Повідомлення…", "Хабарлама…", "Mensaje…"], ["Видеозвонок", "Video call", "Відеодзвінок", "Бейнеқоңырау", "Videollamada"], ["Двустрочный", "Two lines", "Дворядковий", "Екі жолды", "Dos líneas"], ["Скопировано", "Copied", "Скопійовано", "Көшірілді", "Copiado"], ["Сохранено ✓", "Saved ✓", "Збережено ✓", "Сақталды ✓", "Guardado ✓"], ["Уведомления", "Notifications", "Сповіщення", "Хабарландырулар", "Notificaciones"], ["собеседника", "the contact", "співрозмовника", "әңгімелесушіге", "el contacto"], ["всех", "everyone", "всіх", "барлығы үшін", "todos"], ["🎤 Голосовое", "🎤 Voice message", "🎤 Голосове", "🎤 Дыбыстық хабар", "🎤 Mensaje de voz"], ["Найти друзей", "Find friends", "Знайти друзів", "Достарды табу", "Buscar amigos"], ["✨ Найти друзей", "✨ Find friends", "✨ Знайти друзів", "✨ Достарды табу", "✨ Buscar amigos"], ["Новая группа", "New group", "Нова група", "Жаңа топ", "Nuevo grupo"], ["Подключаюсь…", "Connecting…", "Підключаюсь…", "Қосылуда…", "Conectando…"], ["Сменить фото", "Change photo", "Змінити фото", "Суретті ауыстыру", "Cambiar foto"], ["Список чатов", "Chat list", "Список чатів", "Чаттар тізімі", "Lista de chats"], ["Трёхстрочный", "Three lines", "Трирядковий", "Үш жолды", "Tres líneas"], ["Включить звук", "Unmute", "Увімкнути звук", "Дыбысты қосу", "Activar sonido"], ["Отключить звук", "Mute", "Вимкнути звук", "Дыбысты өшіру", "Silenciar"], ["Непрочитанное", "Unread", "Непрочитані", "Оқылмаған", "No leídos"], ["Размер текста", "Text size", "Розмір тексту", "Мәтін өлшемі", "Tamaño del texto"], ["Цветовая тема", "Color theme", "Колірна тема", "Түс тақырыбы", "Tema de color"], ["В Токио утро 😎", "It's morning in Tokyo 😎", "У Токіо ранок 😎", "Токиода таң 😎", "Es de mañana en Tokio 😎"], ["Доброе утро! 👋", "Good morning! 👋", "Доброго ранку! 👋", "Қайырлы таң! 👋", "¡Buenos días! 👋"], ["Введите пароль", "Enter your password", "Введіть пароль", "Құпиясөзді енгізіңіз", "Introduce tu contraseña"], ["Забыли пароль?", "Forgot password?", "Забули пароль?", "Құпиясөзді ұмыттыңыз ба?", "¿Olvidaste tu contraseña?"], ["Не отправлено.", "Not sent.", "Не надіслано.", "Жіберілмеді.", "No enviado."], ["Неверная почта", "Invalid email", "Невірна пошта", "Пошта қате", "Correo no válido"], ["Поиск по чатам", "Search chats", "Пошук по чатах", "Чаттардан іздеу", "Buscar en chats"], ["Входящий звонок", "Incoming call", "Вхідний дзвінок", "Кіріс қоңырау", "Llamada entrante"], ["Входящий видеозвонок", "Incoming video call", "Вхідний відеодзвінок", "Кіріс бейнеқоңырау", "Videollamada entrante"], ["Данные и память", "Data and storage", "Дані та пам’ять", "Деректер және жад", "Datos y almacenamiento"], ["Здесь пока тихо", "It's quiet here", "Тут поки тихо", "Әзірге тыныш", "Aquí no hay nada aún"], ["Название группы", "Group name", "Назва групи", "Топ атауы", "Nombre del grupo"], ["Настройки чатов", "Chat settings", "Налаштування чатів", "Чат баптаулары", "Ajustes de chats"], ["Неверный пароль", "Wrong password", "Невірний пароль", "Құпиясөз қате", "Contraseña incorrecta"], ["Орбита работает", "Orbita is running", "Орбіта працює", "Орбита жұмыс істеп тұр", "Orbita está activa"], ["Принимает сообщения и звонки", "Receiving messages and calls", "Приймає повідомлення і дзвінки", "Хабарлама мен қоңырауларды қабылдауда", "Recibiendo mensajes y llamadas"], ["Работать в фоне", "Run in background", "Працювати у фоні", "Фонда жұмыс істеу", "Ejecutar en segundo plano"], ["Рисуйте пальцем", "Draw with your finger", "Малюйте пальцем", "Саусақпен сызыңыз", "Dibuja con el dedo"], ["Создать аккаунт", "Create account", "Створити акаунт", "Аккаунт жасау", "Crear cuenta"], ["Удалить стикер?", "Delete sticker?", "Видалити стікер?", "Стикерді жою керек пе?", "¿Eliminar sticker?"], ["Имя пользователя", "Username", "Ім’я користувача", "Пайдаланушы аты", "Nombre de usuario"], ["Создать стикер ➤", "Create sticker ➤", "Створити стікер ➤", "Стикер жасау ➤", "Crear sticker ➤"], ["Энергосбережение", "Power saving", "Енергозбереження", "Қуатты үнемдеу", "Ahorro de energía"], ["‹ Влево — отмена", "‹ Slide left to cancel", "‹ Вліво — скасувати", "‹ Солға — бас тарту", "‹ Desliza para cancelar"], ["👥 Создать группу", "👥 New group", "👥 Створити групу", "👥 Топ құру", "👥 Crear grupo"], ["Аккаунт не найден", "Account not found", "Акаунт не знайдено", "Аккаунт табылмады", "Cuenta no encontrada"], ["Выйти из аккаунта", "Log out", "Вийти з акаунта", "Аккаунттан шығу", "Cerrar sesión"], ["Ничего не найдено", "Nothing found", "Нічого не знайдено", "Ештеңе табылмады", "No se encontró nada"], ["Связь прервалась…", "Connection lost…", "Зв’язок перервано…", "Байланыс үзілді…", "Se perdió la conexión…"], ["Сохранить аккаунт", "Save account", "Зберегти акаунт", "Аккаунтты сақтау", "Guardar cuenta"], ["Удалить сообщение", "Delete message", "Видалити повідомлення", "Хабарламаны жою", "Eliminar mensaje"], ["Удалить сообщения", "Delete messages", "Видалити повідомлення", "Хабарламаларды жою", "Eliminar mensajes"], ["Введите почту выше", "Enter your email above", "Введіть пошту вище", "Жоғарыда поштаны енгізіңіз", "Introduce tu correo arriba"], ["Выйти из аккаунта?", "Log out?", "Вийти з акаунта?", "Аккаунттан шығасыз ба?", "¿Cerrar sesión?"], ["Конфиденциальность", "Privacy", "Конфіденційність", "Құпиялылық", "Privacidad"], ["Логотип приложения", "App logo", "Логотип застосунку", "Қолданба логотипі", "Logotipo de la app"], ["Этот ник уже занят", "This nickname is taken", "Цей нік уже зайнятий", "Бұл лақап ат бос емес", "Este apodo ya está en uso"], ["Показывать «в сети»", "Show «online»", "Показувати «в мережі»", "«Желіде» көрсету", "Mostrar «en línea»"], ["Показывать «печатает…»", "Show «typing…»", "Показувати «друкує…»", "«Жазуда…» көрсету", "Mostrar «escribiendo…»"], ["🖼 Выбрать своё фото", "🖼 Choose your photo", "🖼 Обрати своє фото", "🖼 Өз суретіңізді таңдау", "🖼 Elegir tu foto"], ["Эта почта уже занята", "This email is already in use", "Ця пошта вже зайнята", "Бұл пошта бос емес", "Este correo ya está en uso"], ["Ваше имя пользователя", "Your username", "Ваше ім’я користувача", "Сіздің пайдаланушы атыңыз", "Tu nombre de usuario"], ["Не удалось сохранить.", "Couldn't save.", "Не вдалося зберегти.", "Сақтау мүмкін болмады.", "No se pudo guardar."], ["Уведомления о звонках", "Call notifications", "Сповіщення про дзвінки", "Қоңырау хабарландырулары", "Notificaciones de llamadas"], ["Уведомления о сообщениях", "Message notifications", "Сповіщення про повідомлення", "Хабарлама хабарландырулары", "Notificaciones de mensajes"], ["Фото слишком большое.", "The photo is too large.", "Фото завелике.", "Сурет тым үлкен.", "La foto es demasiado grande."], ["Например: люблю космос", "For example: I love space", "Наприклад: люблю космос", "Мысалы: ғарышты жақсы көремін", "Por ejemplo: me encanta el espacio"], ["Не удалось соединиться", "Couldn't connect", "Не вдалося з’єднатися", "Қосылу мүмкін болмады", "No se pudo conectar"], ["Пароль (от 6 символов)", "Password (6+ characters)", "Пароль (від 6 символів)", "Құпиясөз (6 таңбадан бастап)", "Contraseña (mín. 6 caracteres)"], ["Нет доступа к микрофону", "No microphone access", "Немає доступу до мікрофона", "Микрофонға рұқсат жоқ", "Sin acceso al micrófono"], ["Введите название группы.", "Enter a group name.", "Введіть назву групи.", "Топ атауын енгізіңіз.", "Introduce un nombre de grupo."], ["Это ваш собственный ник.", "This is your own nickname.", "Це ваш власний нік.", "Бұл сіздің өз лақап атыңыз.", "Este es tu propio apodo."], ["Напишите первое сообщение", "Write the first message", "Напишіть перше повідомлення", "Бірінші хабарламаны жазыңыз", "Escribe el primer mensaje"], ["Не удалось начать звонок.", "Couldn't start the call.", "Не вдалося розпочати дзвінок.", "Қоңырауды бастау мүмкін болмады.", "No se pudo iniciar la llamada."], ["Не удалось сохранить ник.", "Couldn't save the nickname.", "Не вдалося зберегти нік.", "Лақап атты сақтау мүмкін болмады.", "No se pudo guardar el apodo."], ["Неверная почта или пароль", "Wrong email or password", "Невірна пошта або пароль", "Пошта немесе құпиясөз қате", "Correo o contraseña incorrectos"], ["Углы блоков с сообщениями", "Message corner radius", "Заокруглення повідомлень", "Хабарлама бұрыштары", "Esquinas de los mensajes"], ["Голосовое слишком длинное.", "The voice message is too long.", "Голосове задовге.", "Дыбыстық хабар тым ұзақ.", "El mensaje de voz es demasiado largo."], ["Не удалось создать группу.", "Couldn't create the group.", "Не вдалося створити групу.", "Топ құру мүмкін болмады.", "No se pudo crear el grupo."], ["Не удалось сохранить фото.", "Couldn't save the photo.", "Не вдалося зберегти фото.", "Суретті сақтау мүмкін болмады.", "No se pudo guardar la foto."], ["Нет подключения к интернету", "No internet connection", "Немає підключення до інтернету", "Интернет байланысы жоқ", "Sin conexión a internet"], ["Не удалось сохранить стикер.", "Couldn't save the sticker.", "Не вдалося зберегти стікер.", "Стикерді сақтау мүмкін болмады.", "No se pudo guardar el sticker."], ["🌙 Переключить на ночную тему", "🌙 Switch to night theme", "🌙 Перемкнути на нічну тему", "🌙 Түнгі тақырыпқа ауыстыру", "🌙 Cambiar al tema nocturno"], ["☀️ Переключить на дневную тему", "☀️ Switch to day theme", "☀️ Перемкнути на денну тему", "☀️ Күндізгі тақырыпқа ауыстыру", "☀️ Cambiar al tema diurno"], ["Выберите участников из друзей", "Choose members from friends", "Оберіть учасників з-поміж друзів", "Достарыңыздан қатысушыларды таңдаңыз", "Elige miembros de tus amigos"], ["Сбросить свои имена контактов", "Reset my contact names", "Скинути мої імена контактів", "Контакт аттарын қалпына келтіру", "Restablecer mis nombres de contactos"], ["Выберите хотя бы одного друга.", "Choose at least one friend.", "Оберіть хоча б одного друга.", "Кем дегенде бір дос таңдаңыз.", "Elige al menos un amigo."], ["Имя для вас (видите только вы)", "Name for you (only you see it)", "Ім’я для вас (бачите лише ви)", "Сізге арналған аты (тек сіз көресіз)", "Nombre para ti (solo lo ves tú)"], ["Нажмите на фото, чтобы открыть", "Tap the photo to open it", "Натисніть на фото, щоб відкрити", "Ашу үшін суретті басыңыз", "Toca la foto para abrirla"], ["Приложение временно недоступно.", "The app is temporarily unavailable.", "Застосунок тимчасово недоступний.", "Қолданба уақытша қолжетімсіз.", "La aplicación no está disponible temporalmente."], ["Вернуть скрытые чаты и сообщения", "Restore hidden chats and messages", "Повернути приховані чати й повідомлення", "Жасырын чаттар мен хабарламаларды қайтару", "Restaurar chats y mensajes ocultos"], ["Запись голоса не поддерживается.", "Voice recording isn't supported.", "Запис голосу не підтримується.", "Дыбыс жазу қолдау таппайды.", "La grabación de voz no es compatible."], ["Вход по почте временно недоступен", "Email sign-in is temporarily unavailable", "Вхід за поштою тимчасово недоступний", "Пошта арқылы кіру уақытша қолжетімсіз", "El inicio con correo no está disponible temporalmente"], ["Обведите пальцем то, что оставить", "Trace around what to keep", "Обведіть пальцем те, що залишити", "Қалдыратын бөлікті саусақпен белгілеңіз", "Dibuja alrededor de lo que quieres conservar"], ["Письмо для сброса пароля отправлено", "Password reset email sent", "Лист для скидання пароля надіслано", "Құпиясөзді қалпына келтіру хаты жіберілді", "Correo de restablecimiento enviado"], ["Пользователь с таким ником не найден.", "No user with that nickname found.", "Користувача з таким ніком не знайдено.", "Мұндай лақап атпен пайдаланушы табылмады.", "No se encontró ningún usuario con ese apodo."], ["Вы точно хотите удалить это сообщение?", "Are you sure you want to delete this message?", "Ви впевнені, що хочете видалити це повідомлення?", "Бұл хабарламаны шынымен жойғыңыз келе ме?", "¿Seguro que quieres eliminar este mensaje?"], ["Двигайте и увеличивайте двумя пальцами", "Drag and pinch with two fingers to resize", "Рухайте та збільшуйте двома пальцями", "Екі саусақпен жылжытып, үлкейтіңіз", "Arrastra y amplía con dos dedos"], ["Слишком много попыток. Подождите немного", "Too many attempts. Please wait a bit", "Забагато спроб. Зачекайте трохи", "Тым көп әрекет. Сәл күтіңіз", "Demasiados intentos. Espera un poco"], ["Не удалось сохранить ник. Попробуйте позже", "Couldn't save the nickname. Try again later", "Не вдалося зберегти нік. Спробуйте пізніше", "Лақап атты сақтау мүмкін болмады. Кейінірек қайталаңыз", "No se pudo guardar el apodo. Inténtalo más tarde"], ["Не удалось сменить иконку на рабочем столе.", "Couldn't change the home screen icon.", "Не вдалося змінити іконку на робочому столі.", "Жұмыс үстеліндегі белгішені ауыстыру мүмкін болмады.", "No se pudo cambiar el icono de la pantalla de inicio."], ["Пароль слишком короткий (минимум 6 символов)", "Password is too short (6 characters minimum)", "Пароль закороткий (мінімум 6 символів)", "Құпиясөз тым қысқа (кемінде 6 таңба)", "La contraseña es demasiado corta (mínimo 6 caracteres)"], ["Не удалось добавить. Проверьте ник и интернет.", "Couldn't add. Check the nickname and your internet.", "Не вдалося додати. Перевірте нік та інтернет.", "Қосу мүмкін болмады. Лақап ат пен интернетті тексеріңіз.", "No se pudo añadir. Revisa el apodo y tu conexión."], ["Ник: 3–20 символов, только буквы, цифры, _ и .", "Nickname: 3–20 characters, letters, digits, _ and . only", "Нік: 3–20 символів, лише літери, цифри, _ та .", "Лақап ат: 3–20 таңба, тек әріптер, сандар, _ және .", "Apodo: 3–20 caracteres, solo letras, números, _ y ."], ["Не удалось открыть картинку. Попробуйте другую.", "Couldn't open the image. Try another one.", "Не вдалося відкрити зображення. Спробуйте інше.", "Суретті ашу мүмкін болмады. Басқасын таңдаңыз.", "No se pudo abrir la imagen. Prueba con otra."], ["Не удалось выполнить действие. Попробуйте ещё раз", "Something went wrong. Please try again", "Не вдалося виконати дію. Спробуйте ще раз", "Әрекетті орындау мүмкін болмады. Қайталап көріңіз", "Algo salió mal. Inténtalo de nuevo"], ["Не удалось поставить обои. Попробуйте другое фото.", "Couldn't set the wallpaper. Try another photo.", "Не вдалося встановити шпалери. Спробуйте інше фото.", "Тұсқағазды орнату мүмкін болмады. Басқа суретті таңдаңыз.", "No se pudo poner el fondo. Prueba con otra foto."], ["Сначала добавьте друзей во вкладке «Найти друзей».", "First add friends in the «Find friends» tab.", "Спершу додайте друзів на вкладці «Знайти друзів».", "Алдымен «Достарды табу» қойындысында дос қосыңыз.", "Primero añade amigos en la pestaña «Buscar amigos»."], ["Нет доступа к микрофону. Разрешите его в настройках.", "No microphone access. Allow it in settings.", "Немає доступу до мікрофона. Дозвольте його в налаштуваннях.", "Микрофонға рұқсат жоқ. Баптауларда рұқсат беріңіз.", "Sin acceso al micrófono. Permítelo en los ajustes."], ["Нет доступа к микрофону или камере. Разрешите его в настройках.", "No microphone or camera access. Allow it in settings.", "Немає доступу до мікрофона чи камери. Дозвольте його в налаштуваннях.", "Микрофонға немесе камераға рұқсат жоқ. Баптауларда рұқсат беріңіз.", "Sin acceso al micrófono o la cámara. Permítelo en los ajustes."], ["Иконка приложения на рабочем столе и логотип в шапке.", "App icon on the home screen and the logo in the header.", "Іконка застосунку на робочому столі та логотип у шапці.", "Жұмыс үстеліндегі қолданба белгішесі және тақырыптағы логотип.", "Icono de la app en la pantalla de inicio y logotipo en la cabecera."], ["Найдите друга по имени пользователя и начните общение.", "Find a friend by username and start chatting.", "Знайдіть друга за ім’ям користувача й почніть спілкування.", "Досыңызды пайдаланушы аты бойынша тауып, сөйлесуді бастаңыз.", "Busca a un amigo por su nombre de usuario y empieza a chatear."], ["Если выключить, другие не увидят, когда вы онлайн или печатаете.", "If turned off, others won't see when you're online or typing.", "Якщо вимкнути, інші не бачитимуть, коли ви онлайн або друкуєте.", "Өшірсеңіз, басқалар сіздің желіде екеніңізді не жазып жатқаныңызды көрмейді.", "Si lo desactivas, los demás no verán cuándo estás en línea o escribiendo."], ["Готово. Иконка на рабочем столе обновится через несколько секунд.", "Done. The home screen icon will update in a few seconds.", "Готово. Іконка на робочому столі оновиться за кілька секунд.", "Дайын. Жұмыс үстеліндегі белгіше бірнеше секундта жаңарады.", "Listo. El icono se actualizará en unos segundos."], ["Нет подключения к интернету. Проверьте сеть и нажмите «Повторить».", "No internet connection. Check your network and tap «Retry».", "Немає підключення до інтернету. Перевірте мережу й натисніть «Повторити».", "Интернет байланысы жоқ. Желіні тексеріп, «Қайталау» түймесін басыңыз.", "Sin conexión a internet. Revisa tu red y toca «Reintentar»."], ["Придумайте уникальное имя пользователя. По нему друзья смогут вас найти.", "Come up with a unique username. Friends will use it to find you.", "Придумайте унікальне ім’я користувача. За ним друзі зможуть вас знайти.", "Бірегей пайдаланушы атын ойлап табыңыз. Достарыңыз сізді сол арқылы табады.", "Elige un nombre de usuario único. Tus amigos te encontrarán con él."], ["Введите имя пользователя друга выше. Друг сразу появится во вкладке «Чаты».", "Enter your friend's username above. They'll appear in the «Chats» tab right away.", "Введіть ім’я користувача друга вище. Друг одразу з’явиться на вкладці «Чати».", "Жоғарыда досыңыздың пайдаланушы атын енгізіңіз. Ол бірден «Чаттар» қойындысында шығады.", "Introduce arriba el nombre de usuario de tu amigo. Aparecerá enseguida en la pestaña «Chats»."], ["Аккаунт сохранён. Теперь можно войти с другого телефона или после переустановки.", "Account saved. You can now log in from another phone or after reinstalling.", "Акаунт збережено. Тепер можна увійти з іншого телефона або після перевстановлення.", "Аккаунт сақталды. Енді басқа телефоннан немесе қайта орнатқаннан кейін кіре аласыз.", "Cuenta guardada. Ahora puedes entrar desde otro teléfono o tras reinstalar."], ["Аккаунт не сохранён: если удалить приложение, ник и друзья пропадут. Привяжите почту:", "Account not saved: if you delete the app, your nickname and friends will be lost. Link an email:", "Акаунт не збережено: якщо видалити застосунок, нік і друзі зникнуть. Прив’яжіть пошту:", "Аккаунт сақталмаған: қолданбаны жойсаңыз, лақап ат пен достар жоғалады. Поштаны байланыстырыңыз:", "Cuenta sin guardar: si borras la app, perderás tu apodo y tus amigos. Vincula un correo:"], ["Логотип в приложении изменён. Иконка на рабочем столе поменяется после обновления APK.", "The in-app logo has been changed. The home screen icon will change after the APK update.", "Логотип у застосунку змінено. Іконка на робочому столі зміниться після оновлення APK.", "Қолданбадағы логотип өзгертілді. Жұмыс үстеліндегі белгіше APK жаңартылғаннан кейін өзгереді.", "Se cambió el logotipo de la app. El icono de la pantalla de inicio cambiará tras actualizar el APK."], ["Войдите или создайте аккаунт: тогда ник, ID и друзья сохранятся, даже если удалить приложение.", "Log in or create an account so your nickname, ID and friends are kept even if you delete the app.", "Увійдіть або створіть акаунт: тоді нік, ID і друзі збережуться, навіть якщо видалити застосунок.", "Кіріңіз немесе аккаунт жасаңыз: сонда лақап ат, ID және достар қолданбаны жойсаңыз да сақталады.", "Inicia sesión o crea una cuenta: así tu apodo, ID y amigos se conservarán aunque borres la app."], ["Нужно, чтобы сообщения и звонки приходили при закрытом приложении. Расходует больше батареи. Изменение вступит в силу после перезапуска.", "Needed so messages and calls arrive when the app is closed. Uses more battery. Takes effect after a restart.", "Потрібно, щоб повідомлення й дзвінки надходили при закритому застосунку. Витрачає більше батареї. Набуде чинності після перезапуску.", "Қолданба жабық кезде хабарлама мен қоңыраулар келуі үшін керек. Батареяны көбірек жейді. Қайта іске қосқаннан кейін күшіне енеді.", "Necesario para recibir mensajes y llamadas con la app cerrada. Gasta más batería. Se aplica tras reiniciar."], ["Выбрано {0}", "Selected {0}", "Вибрано {0}", "Таңдалды: {0}", "Seleccionados: {0}"], ["{0} участн.", "{0} members", "{0} учасн.", "{0} қатысушы", "{0} miembros"], ["был(а) в {0}", "last seen at {0}", "був(ла) о {0}", "{0} кезінде болды", "visto a las {0}"], ["Вы: {0}", "You: {0}", "Ви: {0}", "Сіз: {0}", "Tú: {0}"], ["Удалить чат с {0}?\nОн появится снова, когда придёт новое сообщение.", "Delete chat with {0}?\nIt will reappear when a new message arrives.", "Видалити чат з {0}?\nВін з’явиться знову, коли надійде нове повідомлення.", "{0} чатын жою керек пе?\nЖаңа хабарлама келгенде ол қайта пайда болады.", "¿Eliminar el chat con {0}?\nVolverá a aparecer cuando llegue un mensaje nuevo."], ["Удалить группу «{0}» из списка?\nОн появится снова, когда придёт новое сообщение.", "Remove group «{0}» from the list?\nIt will reappear when a new message arrives.", "Видалити групу «{0}» зі списку?\nВона з’явиться знову, коли надійде нове повідомлення.", "«{0}» тобын тізімнен жою керек пе?\nЖаңа хабарлама келгенде ол қайта пайда болады.", "¿Quitar el grupo «{0}» de la lista?\nVolverá a aparecer cuando llegue un mensaje nuevo."], ["Также удалить для {0}", "Also delete for {0}", "Також видалити для {0}", "{0} үшін де жою", "Eliminar también para {0}"], ["Вы точно хотите удалить выбранные сообщения ({0})?", "Are you sure you want to delete the selected messages ({0})?", "Ви впевнені, що хочете видалити вибрані повідомлення ({0})?", "Таңдалған хабарламаларды ({0}) шынымен жойғыңыз келе ме?", "¿Seguro que quieres eliminar los mensajes seleccionados ({0})?"], ["Скрытых чатов: {0} · Скрытых сообщений: {1} · Своих имён контактов: {2}", "Hidden chats: {0} · Hidden messages: {1} · Custom contact names: {2}", "Прихованих чатів: {0} · Прихованих повідомлень: {1} · Власних імен контактів: {2}", "Жасырын чаттар: {0} · Жасырын хабарламалар: {1} · Өз контакт аттарыңыз: {2}", "Chats ocultos: {0} · Mensajes ocultos: {1} · Nombres de contacto propios: {2}"], ["Выберите уникальный ник. {0}", "Choose a unique nickname. {0}", "Оберіть унікальний нік. {0}", "Бірегей лақап атты таңдаңыз. {0}", "Elige un apodo único. {0}"]];
+let lang="ru";try{const l=localStorage.getItem("lang");if(CODES.indexOf(l)>=0)lang=l}catch(e){}
+const EX={},PT=[],esc=t=>t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+ROWS.forEach(r=>{if(/\{\d\}/.test(r[0])){const re=new RegExp("^"+r[0].split(/\{\d\}/).map(esc).join("([\\s\\S]*?)")+"$");PT.push({re,t:r.slice(1)})}else EX[r[0]]=r.slice(1)});
+function tx(s){if(lang==="ru"||!s)return s;const i=CODES.indexOf(lang)-1,e=EX[s];if(e)return e[i];for(const p of PT){const m=s.match(p.re);if(m)return p.t[i].replace(/\{(\d)\}/g,(_,k)=>tx(m[+k+1]))}return s}
+const CY=/[А-Яа-яЁё]/,ORIG=new WeakMap(),AT=["placeholder","aria-label","title"],AO=new WeakMap();
+function conv(v){const m=v.match(/^(\s*)([\s\S]*?)(\s*)$/);return m[1]+tx(m[2])+m[3]}
+function trText(n){
+  const p=n.parentNode;if(p&&(p.nodeName==="SCRIPT"||p.nodeName==="STYLE"))return;
+  const v=n.nodeValue,o=ORIG.get(n);
+  if(o&&v===o.out){const out=lang==="ru"?o.ru:conv(o.ru);if(out!==v)n.nodeValue=out;o.out=out;if(lang==="ru")ORIG.delete(n);return}
+  if(!CY.test(v)){if(o)ORIG.delete(n);return}
+  if(lang==="ru"){ORIG.delete(n);return}
+  const out=conv(v);if(out!==v){ORIG.set(n,{ru:v,out});n.nodeValue=out}
+}
+function trAttr(el){
+  for(const a of AT){
+    if(!el.hasAttribute(a))continue;const v=el.getAttribute(a);let st=AO.get(el);if(!st){st={};AO.set(el,st)}const o=st[a];
+    if(o&&v===o.out){const out=lang==="ru"?o.ru:tx(o.ru);if(out!==v)el.setAttribute(a,out);o.out=out;if(lang==="ru")delete st[a];continue}
+    if(!CY.test(v)){if(o)delete st[a];continue}
+    if(lang==="ru"){delete st[a];continue}
+    const out=tx(v);if(out!==v){st[a]={ru:v,out};el.setAttribute(a,out)}
+  }
+}
+function walk(root){
+  if(root.nodeType===3){trText(root);return}if(root.nodeType!==1)return;
+  trAttr(root);const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT|NodeFilter.SHOW_ELEMENT);let n;
+  while(n=w.nextNode()){if(n.nodeType===3)trText(n);else trAttr(n)}
+}
+new MutationObserver(ms=>{if(lang==="ru")return;for(const m of ms){if(m.type==="childList")m.addedNodes.forEach(walk);else if(m.type==="characterData")trText(m.target);else trAttr(m.target)}})
+  .observe(document.documentElement,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:AT});
+window.setLang=l=>{if(CODES.indexOf(l)<0)return;lang=l;try{localStorage.setItem("lang",l)}catch(e){}document.documentElement.lang=l;walk(document.body)};
+window.getLang=()=>lang;window.LANGS=LANGS;window.T=tx;
+const A=window.alert.bind(window),C=window.confirm.bind(window),P=window.prompt.bind(window);
+window.alert=m=>A(tx(String(m)));window.confirm=m=>C(tx(String(m)));window.prompt=(m,d)=>P(tx(String(m)),d);
+document.documentElement.lang=lang;if(lang!=="ru")walk(document.body);
+})();
+</script>
 <script type="module">
 import * as CFG from "./firebase-config.js";
 const cfg=CFG.cfg,turn=CFG.turn||[];
@@ -236,7 +292,7 @@ let FB;
 try{FB=await Promise.all([import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"),import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"),import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js")])}
 catch(e){fail("Нет подключения к интернету. Проверьте сеть и нажмите «Повторить».");throw e}
 const {initializeApp}=FB[0],{getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signOut,sendPasswordResetEmail,EmailAuthProvider,linkWithCredential}=FB[1],
-{getFirestore,doc,getDoc,setDoc,collection,addDoc,query,where,orderBy,limit,onSnapshot,getDocs,updateDoc,deleteDoc,runTransaction}=FB[2];
+{getFirestore,doc,getDoc,setDoc,collection,addDoc,query,where,orderBy,limit,onSnapshot,getDocs,updateDoc,deleteDoc,runTransaction,arrayUnion,arrayRemove}=FB[2];
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 if(cfg.apiKey.startsWith("PASTE")){fail("Приложение временно недоступно.")}
 else{
@@ -254,16 +310,16 @@ const nickOf=async u=>{
 const ping=()=>{if(myNick&&gs("seen"))setDoc(doc(db,"users",me),{seen:Date.now(),nickl:myNick.toLowerCase()},{merge:true}).catch(()=>{})};setInterval(ping,30000);
 let myBio="";
 let pmode="e",stk=[];
-const watchGroups=()=>onSnapshot(query(collection(db,"groups"),where("members","array-contains",me)),s=>{groups=s.docs.map(d=>({id:d.id,...d.data()}));renderList()},()=>{});
+const watchGroups=()=>onSnapshot(query(collection(db,"groups"),where("members","array-contains",me)),s=>{groups=s.docs.map(d=>({id:d.id,...d.data()}));renderList();if(grp&&base&&base[0]==="groups"){const g=groups.find(x=>x.id===grp.id);if(g){grp=g;$("cname").textContent=g.name;$("cstat").textContent=g.members.length+" участн.";gav($("cav"),g)}}},()=>{});
 const watchStk=()=>onSnapshot(collection(db,"users",me,"stickers"),s=>{stk=s.docs.map(d=>({id:d.id,img:d.data().img}));if(pmode=="s")panel()},()=>{});
 const CP=(window.Capacitor&&window.Capacitor.Plugins)||{},LN=CP.LocalNotifications,BM=CP.BackgroundMode;
 let curKey=null;const seen={};
-function notify(t,b,ch){if(LN&&gs(ch==="call"?"nc":"nm"))LN.schedule({notifications:[{id:Math.floor(Math.random()*2e9),title:t,body:b,channelId:ch}]}).catch(()=>{})}
+function notify(t,b,ch){b=window.T?window.T(b):b;if(LN&&gs(ch==="call"?"nc":"nm"))LN.schedule({notifications:[{id:Math.floor(Math.random()*2e9),title:t,body:b,channelId:ch}]}).catch(()=>{})}
 async function initNotif(){
   try{
     if(LN){await LN.requestPermissions();await LN.createChannel({id:"msg",name:"Сообщения",importance:4,vibration:true});await LN.createChannel({id:"call",name:"Звонки",importance:5,vibration:true})}
     if(BM&&gs("bg")){
-      const o={title:"Орбита",text:"Принимает сообщения и звонки",silent:false,channelName:"Орбита работает"};
+      const o={title:"Орбита",text:window.T("Принимает сообщения и звонки"),silent:false,channelName:window.T("Орбита работает")};
       try{await BM.requestNotificationsPermission()}catch(e){}
       try{await BM.setSettings(o)}catch(e){}
       await BM.enable(o);
@@ -272,7 +328,7 @@ async function initNotif(){
   }catch(e){}
 }
 let wc=0;
-function home(){ping();if(!wc){wc=1;watchCalls();watchStk();watchGroups();initNotif()}
+function home(){ping();if(!wc){wc=1;watchCalls();watchStk();watchGroups();watchStories();loadBlk();initNotif()}
   $("myid").textContent="@"+myNick;show("s-home");
   if(unsubs.length){renderList();return}
   for(const f of ["a","b"])unsubs.push(onSnapshot(query(collection(db,"links"),where(f,"==",me)),s=>{
@@ -285,25 +341,25 @@ const pv={},pw={};
 let lo={};try{lo=JSON.parse(localStorage.getItem("lo")||"{}")}catch(e){}
 const mark=k=>{lo[k]=Date.now();try{localStorage.setItem("lo",JSON.stringify(lo))}catch(e){}};
 const keyOf=l=>l.g?"g"+l.g.id:pairId(me,l.u);
-const cnt=l=>{const k=keyOf(l),q=pv[k];return q?q.filter(m=>m.uid!==me&&(l.g?m.ts>(lo[k]||l.g.ts||0):!m.read)).length:0};
+const cnt=l=>{const k=keyOf(l),q=pvf(k);return q?q.filter(m=>m.uid!==me&&(l.g?m.ts>(lo[k]||l.g.ts||0):!m.read)).length:0};
 function watchPv(l){
   const k=keyOf(l);if(pw[k])return;
   const bs=l.g?["groups",l.g.id]:["dms",k];
   pw[k]=onSnapshot(query(collection(db,...bs,"msgs"),orderBy("ts","desc"),limit(30)),s=>{
     const ms=s.docs.map(d=>d.data());pv[k]=ms;
     const top=ms[0]?ms[0].ts:0;
-    if(seen[k]!==undefined)ms.filter(m=>m.uid!==me&&m.ts>seen[k]).forEach(m=>{if(document.hidden||curKey!==k)notify(l.g?l.g.name:nicks[l.u],prev(m),"msg")});
+    if(seen[k]!==undefined)ms.filter(m=>m.uid!==me&&m.ts>seen[k]&&!blk.has(m.uid)&&!mutes[k]).forEach(m=>{if(document.hidden||curKey!==k)notify(l.g?l.g.name:nicks[l.u],prev(m),"msg")});
     seen[k]=Math.max(seen[k]||0,top);renderList()},()=>{});
 }
-const prev=m=>m?(m.uid===me?"Вы: ":"")+(m.stk?"Стикер":m.img?(m.img.startsWith("data:audio")?"🎤 Голосовое":"📷 Фото"):m.text):"";
+const prev=m=>m?(m.uid===me?"Вы: ":"")+(m.stk?"Стикер":m.img?(m.img.startsWith("data:audio")?"🎤 Голосовое":m.img.startsWith("data:video")?(m.circ?"⭕ Кружок":"🎥 Видео"):"📷 Фото"):m.text):"";
 const hhmm=t=>{const d=new Date(t),n=new Date();return d.toDateString()==n.toDateString()?d.getHours()+":"+("0"+d.getMinutes()).slice(-2):("0"+d.getDate()).slice(-2)+"."+("0"+(d.getMonth()+1)).slice(-2)};
 async function renderList(){
   const all=Object.values(links);
   for(const l of all)await nickOf(l.u);
   let items=[...groups.map(g=>({g})),...all];
   items.forEach(watchPv);
-  const lt=l=>((pv[keyOf(l)]||[])[0]||{ts:0}).ts;
-  items.sort((x,y)=>lt(y)-lt(x));items=items.filter(l=>{const h=hid[keyOf(l)];return !h||lt(l)>h});
+  const lt=l=>(pvf(keyOf(l))[0]||{ts:0}).ts;
+  items.sort((x,y)=>(pins[keyOf(y)]?1:0)-(pins[keyOf(x)]?1:0)||lt(y)-lt(x));items=items.filter(l=>{const h=hid[keyOf(l)];return !h||lt(l)>h});
   {const tot=items.reduce((a,l)=>a+cnt(l),0),bd=$("nbadge");bd.textContent=tot>99?"99+":tot;bd.style.display=tot?"flex":"none"}
   const sq=($("csq").value||"").trim().toLowerCase(),hasF=!!sq||flt!=="all";
   if(hasF)items=items.filter(l=>(flt==="groups"?!!l.g:flt==="unread"?cnt(l)>0:true)&&(!sq||(l.g?l.g.name:(nicks[l.u]||"")+" "+(rn[l.u]||"")).toLowerCase().includes(sq)));
@@ -316,11 +372,11 @@ const ds=document.createElement("div");ds.textContent="Найдите друга
 const bt=document.createElement("button");bt.className="btn";bt.style.marginTop="16px";bt.textContent="✨ Найти друзей";bt.onclick=()=>setTab(2);
 e.append(ic,tt,ds,bt);box.appendChild(e);return}
   items.forEach(l=>{
-    const ms=pv[keyOf(l)]||[],last=ms[0]||null,n0=cnt(l);
+    const ms=pvf(keyOf(l)),last=ms[0]||null,n0=cnt(l);
     const r=document.createElement("div");r.className="row";
-    const a=document.createElement("div");a.className="av";if(l.g){a.style.background=col(l.g.id);a.textContent="👥"}else mkav(a,nicks[l.u],l.u);
+    const a=document.createElement("div");a.className="av";if(l.g)gav(a,l.g);else mkav(a,nicks[l.u],l.u);
     const n=document.createElement("div");n.style.cssText="flex:1;min-width:0";
-    const t=document.createElement("div");t.textContent=l.g?l.g.name:nicks[l.u];if(n0)t.style.fontWeight="700";
+    const t=document.createElement("div");{const k0=keyOf(l);t.textContent=(l.g?l.g.name:nicks[l.u])+(pins[k0]?" 📌":"")+(mutes[k0]?" 🔇":"")}if(n0)t.style.fontWeight="700";
     const b=document.createElement("div");b.className="dim";b.style.cssText="white-space:nowrap;overflow:hidden;text-overflow:ellipsis";b.textContent=prev(last)||(l.g?"":bios[l.u]||"");
     n.append(t,b);r.append(a,n);
     if(last){
@@ -331,7 +387,7 @@ e.append(ic,tt,ds,bt);box.appendChild(e);return}
     }
     let lp=0,tm=null;
     const del=()=>{if(lp)return;lp=1;clearTimeout(tm);if(navigator.vibrate)navigator.vibrate(30);
-      if(confirm((l.g?"Удалить группу «"+l.g.name+"» из списка?":"Удалить чат с "+nicks[l.u]+"?")+"\nОн появится снова, когда придёт новое сообщение.")){hid[keyOf(l)]=Date.now();js("hid",hid);renderList()}};
+      rowMenu(l)};
     r.ontouchstart=()=>{lp=0;tm=setTimeout(del,550)};
     ["ontouchend","ontouchmove","ontouchcancel"].forEach(e=>r[e]=()=>clearTimeout(tm));
     r.oncontextmenu=ev=>{ev.preventDefault();del()};
@@ -367,17 +423,19 @@ let base=null,grp=null,groups=[];
 let unPeer=null,unTyp=null,lastT=0,peerSeen=0,peerTyp=0;
 const EM=["👍","❤️","😂","😮","😢"];
 function status(){const t=Date.now();$("cstat").textContent=t-peerTyp<4000?"печатает…":t-peerSeen<70000?"в сети":peerSeen?"был(а) в "+new Date(peerSeen).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):""}
-function pick(ref,w,mine,txt){
+function pick(ref,w,mine,txt,m){
   const o=w.querySelector(".pk");if(o){o.remove();return}
   const b=document.createElement("div");b.className="pk";
-  EM.forEach(e=>{const x=document.createElement("span");x.textContent=e;x.onclick=ev=>{ev.stopPropagation();updateDoc(ref,{["reactions."+me]:e}).catch(()=>{})};b.appendChild(x)});
-  if(txt){const x=document.createElement("span");x.textContent="📋";x.onclick=ev=>{ev.stopPropagation();try{navigator.clipboard.writeText(txt)}catch(e){}b.remove()};b.appendChild(x)}
+  const add=(ic,fn)=>{const x=document.createElement("span");x.textContent=ic;x.onclick=ev=>{ev.stopPropagation();b.remove();fn()};b.appendChild(x)};
+  if(!(m&&m.poll))EM.forEach(e=>{const x=document.createElement("span");x.textContent=e;x.onclick=ev=>{ev.stopPropagation();updateDoc(ref,{["reactions."+me]:e}).catch(()=>{})};b.appendChild(x)});
+  if(m){add("↩",()=>setReply(m));add("↪",()=>fwdMsg(m));if(mine&&m.text&&!m.poll)add("✏️",()=>startEdit(ref,m))}
+  if(txt)add("📋",()=>{try{navigator.clipboard.writeText(txt)}catch(e){}});
   w.appendChild(b);
 }
 function openChat(u,g){
   grp=g||null;curKey=g?"g"+g.id:pairId(me,u);if(hid[curKey]){delete hid[curKey];js("hid",hid)}base=g?["groups",g.id]:["dms",pairId(me,u)];pair=g?null:pairId(me,u);peerSeen=0;peerTyp=0;$("ca").style.display=$("cv").style.display=g?"none":"";
-  if(g){$("cname").textContent=g.name;$("cstat").textContent=g.members.length+" участн.";$("cav").style.background=col(g.id);$("cav").textContent="👥"}else{$("cname").textContent=nicks[u]||"Гость";$("cstat").textContent="";mkav($("cav"),nicks[u],u)}
-  clearSel();show("s-chat");$("log").innerHTML="";upd();
+  if(g){$("cname").textContent=g.name;$("cstat").textContent=g.members.length+" участн.";gav($("cav"),g)}else{$("cname").textContent=nicks[u]||"Гость";$("cstat").textContent="";mkav($("cav"),nicks[u],u)}
+  clearSel();rClear();$("csb").style.display="none";show("s-chat");$("log").innerHTML="";upd();
   if(unChat)unChat();if(unPeer)unPeer();if(unTyp)unTyp();
   unPeer=g?null:onSnapshot(doc(db,"users",u),d=>{peerSeen=(d.data()||{}).seen||0;status()});
   unTyp=g?null:onSnapshot(doc(db,"dms",pair),d=>{peerTyp=(d.data()||{})["t_"+u]||0;status();setTimeout(status,4200)});
@@ -385,27 +443,29 @@ function openChat(u,g){
     const log=$("log");log.innerHTML="";{const ids=new Set(s.docs.map(d=>d.id));[...sel.keys()].forEach(k=>{if(!ids.has(k))sel.delete(k)});selUI()}
     if(!s.docs.length){const e=document.createElement("div");e.className="empty";e.textContent="Напишите первое сообщение";log.appendChild(e);return}
     s.docs.slice().reverse().forEach(d=>{
-      const m=d.data(),mine=m.uid===me;if(dmh[d.id])return;
+      const m=d.data(),mine=m.uid===me;if(dmh[d.id])return;if(!mine&&blk.has(m.uid))return;
       if(!mine&&!m.read&&!grp)updateDoc(d.ref,{read:true}).catch(()=>{});
       const w=document.createElement("div");w.className="msg"+(mine?" me":"");
       if(grp&&!mine){const sn=document.createElement("div");sn.className="dim";sn.style.fontWeight="700";sn.textContent=nicks[m.uid]||"Гость";w.appendChild(sn)}
-      if(m.img&&m.img.startsWith("data:audio"))voice(w,d.id,m);else if(m.img){const i=document.createElement("img");i.src=m.img;i.className="pic";w.appendChild(i)}
+      if(m.fwd){const f=document.createElement("div");f.className="dim";f.style.fontSize="12px";f.textContent="↪ Переслано от "+m.fwd;w.appendChild(f)}
+      if(m.rep){const q=document.createElement("div");q.className="quote";const qn=document.createElement("b");qn.textContent=m.rep.n;const qt=document.createElement("div");qt.textContent=m.rep.t;q.append(qn,qt);w.appendChild(q)}
+      if(m.img&&m.img.startsWith("data:audio"))voice(w,d.id,m);else if(m.img&&m.img.startsWith("data:video"))vid(w,m);else if(m.img){const i=document.createElement("img");i.src=m.img;i.className="pic";w.appendChild(i)}
       if(m.stk){const i=document.createElement("img");i.src=m.stk;i.className="stk";w.appendChild(i)}
-      if(m.text){const t=document.createElement("div");t.className="tx";t.textContent=m.text;w.appendChild(t)}
-      const rs=Object.values(m.reactions||{});
+      if(m.poll)poll(w,d,m);else if(m.text){const t=document.createElement("div");t.className="tx";t.textContent=m.text;w.appendChild(t)}
+      const rs=m.poll?[]:Object.values(m.reactions||{});
       if(rs.length){const r=document.createElement("div");r.className="rx";r.textContent=rs.join(" ");w.appendChild(r)}
       const dt=new Date(m.ts),tm=document.createElement("div");tm.className="tm";
-      tm.textContent=dt.getHours()+":"+("0"+dt.getMinutes()).slice(-2)+(mine&&!grp?(m.read?" ✓✓":" ✓"):"");
-      w.appendChild(tm);const info={ref:d.ref,w,mine,text:m.text||""};
+      tm.textContent=(m.edited?"изменено · ":"")+dt.getHours()+":"+("0"+dt.getMinutes()).slice(-2)+(mine&&!grp?(m.read?" ✓✓":" ✓"):"");
+      w.appendChild(tm);const info={ref:d.ref,w,mine,text:m.text||"",m};
       if(sel.has(d.id)){sel.set(d.id,info);w.classList.add("sel")}
       let lp=0,lpt=null,sx=0,sy=0;
       w.ontouchstart=e=>{lp=0;sx=e.touches[0].clientX;sy=e.touches[0].clientY;lpt=setTimeout(()=>{lp=1;if(navigator.vibrate)navigator.vibrate(30);togSel(d.id,info)},1000)};
       w.ontouchmove=e=>{if(Math.abs(e.touches[0].clientX-sx)>10||Math.abs(e.touches[0].clientY-sy)>10)clearTimeout(lpt)};
       w.ontouchend=w.ontouchcancel=()=>clearTimeout(lpt);
       w.oncontextmenu=e=>e.preventDefault();
-      w.onclick=()=>{if(lp){lp=0;return}if(sel.size)togSel(d.id,info);else pick(d.ref,w,mine,m.text)};log.appendChild(w);
+      w.onclick=()=>{if(lp){lp=0;return}if(sel.size)togSel(d.id,info);else pick(d.ref,w,mine,m.text,m)};log.appendChild(w);
     });
-    log.scrollTop=log.scrollHeight;
+    log.scrollTop=log.scrollHeight;if($("csb").style.display!=="none")applySearch();
   });
 }
 let call=null,inc=null;
@@ -463,6 +523,7 @@ function watchCalls(){getIce();
   onSnapshot(query(collection(db,"calls"),where("to","==",me)),s=>s.docChanges().forEach(async ch=>{
     const v=ch.doc.data(),id=ch.doc.id;
     if(ch.type==="removed"||v.status!=="ringing"){if(inc&&inc.id===id){inc=null;if(!call)ui(false)}return}
+    if(blk.has(v.from)){updateDoc(doc(db,"calls",id),{status:"ended"}).catch(()=>{});return}
     if(!v.offer||call||inc||Date.now()-v.ts>45000)return;
     inc={id,v};await nickOf(v.from);
     ui(true,v.video?"Видеозвонок":"Звонок",true,v.from);notify(nicks[v.from]||"Гость",v.video?"Входящий видеозвонок":"Входящий звонок","call");
@@ -546,11 +607,13 @@ $("sf").onchange=async function(){
 };
 async function post(d){
   if(!base)return false;
-  try{await addDoc(collection(db,...base,"msgs"),{uid:me,ts:Date.now(),...d});if(pair)updateDoc(doc(db,"links",pair),{chat:true}).catch(()=>{});return true}
+  if(pair){const pu=pair.split("__").find(x=>x!==me);if(blk.has(pu)){alert("Вы заблокировали этого пользователя. Разблокировать можно в меню ⋮.");return false}}
+  try{await addDoc(collection(db,...base,"msgs"),{uid:me,ts:Date.now(),...(replyTo?{rep:replyTo}:{}),...d});replyTo=null;$("rbar").style.display="none";if(pair)updateDoc(doc(db,"links",pair),{chat:true}).catch(()=>{});return true}
   catch(e){alert("Не отправлено.");return false}
 }
 async function send(){
   const i=$("in"),t=i.value.trim();if(!t||!base)return;
+  if(editing){const e=editing;editing=null;i.value="";delete i.dataset.ed;$("rbar").style.display="none";upd();try{await updateDoc(e.ref,{text:t.slice(0,2000),edited:true})}catch(x){alert("Не удалось изменить сообщение.")}return}
   i.value="";i.style.height="auto";upd();
   if(!await post({text:t.slice(0,2000)})){i.value=t;upd()}
 }
@@ -610,7 +673,7 @@ function setAlias(v){
   nicks[pvu]=al[pvu]||rn[pvu]||nicks[pvu];
   $("cname").textContent=nicks[pvu];mkav($("cav"),nicks[pvu],pvu);renderList();$("pview").style.display="none";
 }
-$("cav").onclick=openPv;$("chead").onclick=openPv;
+const hdTap=()=>{if(grp){openGinfo();return}openPv();$("pvblk").textContent=blk.has(pvu)?"✅ Разблокировать":"🚫 Заблокировать"};$("cav").onclick=hdTap;$("chead").onclick=hdTap;
 $("pvsave").onclick=()=>setAlias($("pvname").value);$("pvreset").onclick=()=>setAlias("");
 $("pview").onclick=e=>{if(e.target===$("pview"))$("pview").style.display="none"};
 $("pvav").onclick=()=>{if(avs[pvu]){$("viewimg").src=avs[pvu];$("viewer").style.display="flex"}};
@@ -627,14 +690,15 @@ function askDelMany(items){
     items.forEach(x=>{if(x.mine&&all)deleteDoc(x.ref).catch(()=>{});else{dmh[x.ref.id]=1;x.w.remove()}});js("dmh",dmh);clearSel()};
 }
 const sel=new Map();
-function selUI(){const n=sel.size;$("selbar").style.display=n?"flex":"none";$("seln").textContent="Выбрано "+n;$("selcp").style.display=n===1&&[...sel.values()][0].text?"":"none"}
+function selUI(){const n=sel.size,x=n===1?[...sel.values()][0]:null;$("selbar").style.display=n?"flex":"none";$("seln").textContent="Выбрано "+n;
+  $("selcp").style.display=x&&x.text?"":"none";$("selre").style.display=$("selfw").style.display=x?"":"none";$("seled").style.display=x&&x.mine&&x.text&&x.m&&!x.m.poll?"":"none"}
 function clearSel(){sel.forEach(x=>x.w&&x.w.classList.remove("sel"));sel.clear();selUI()}
 function togSel(id,info){if(sel.has(id)){sel.get(id).w.classList.remove("sel");sel.delete(id)}else{info.w.classList.add("sel");sel.set(id,info)}selUI()}
 $("selx").onclick=clearSel;
 $("seldel").onclick=()=>askDelMany([...sel.values()]);
 $("selcp").onclick=()=>{const x=[...sel.values()][0];try{navigator.clipboard.writeText(x.text)}catch(e){}clearSel()};
 $("dno").onclick=()=>$("dlg").style.display="none";
-const upd=()=>{const v=$("in").value.trim();$("send").style.display=v?"":"none";$("mic").style.display=v?"none":""};
+const upd=()=>{const v=$("in").value.trim();$("send").style.display=v?"":"none";$("mic").style.display=v?"none":"";$("cam").style.display=v?"none":""};
 $("in").addEventListener("input",upd);
 const mmss=t=>Math.floor(t/60)+":"+("0"+Math.floor(t%60)).slice(-2);
 let pa=null,pid=null,vui=null,prate=1;
@@ -691,14 +755,14 @@ async function recStart(e){
     if(an){an.getByteTimeDomainData(buf);let m=0;for(const v of buf)m=Math.max(m,Math.abs(v-128));wf.push(m)}
     if(q>=120)recStop(false)},150);
   mr.ondataavailable=ev=>{if(ev.data.size)ch.push(ev.data)};
-  mr.onstop=async()=>{clearInterval(iv);st.getTracks().forEach(t=>t.stop());if(ac)ac.close().catch(()=>{});$("rec").style.display="none";
+  mr.onstop=async()=>{clearInterval(iv);st.getTracks().forEach(t=>t.stop());if(ac)ac.close().catch(()=>{});$("rec").style.display="none";$("cam").style.visibility="";
     const cancel=rc&&rc.cancel,dur=Math.max(1,Math.round((Date.now()-t0)/1000));rc=null;
     if(cancel||Date.now()-t0<700)return;
     const url=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(new Blob(ch,{type:mt||"audio/webm"}))});
     if(url.length>780000){alert("Голосовое слишком длинное.");return}
     const N=32,bars=[];for(let i=0;i<N;i++){const a=wf.slice(Math.floor(i*wf.length/N),Math.floor((i+1)*wf.length/N));const mx=a.length?Math.max(...a):20;bars.push(Math.min(9,Math.round(mx/128*9*1.8)))}
     post({img:url,dur,wf:bars.join("")})};
-  rc={mr,cancel:false,x0:e.clientX};mr.start(1000);$("rect").textContent="0:00";$("recl").style.opacity=1;$("rec").style.display="flex";if(navigator.vibrate)navigator.vibrate(25);
+  rc={mr,cancel:false,x0:e.clientX};mr.start(1000);$("rect").textContent="0:00";$("recl").style.opacity=1;$("rec").style.display="flex";$("cam").style.visibility="hidden";if(navigator.vibrate)navigator.vibrate(25);
 }
 const mic=$("mic");
 mic.onpointerdown=e=>{e.preventDefault();held=true;mic.setPointerCapture(e.pointerId);recStart(e)};
@@ -714,9 +778,9 @@ function openSet(k,title){
   document.querySelectorAll("#s-set .sw").forEach(x=>x.checked=!!gs(x.dataset.k));
   $("fsz").value=gs("sz",16);
   $("dinfo").textContent="Скрытых чатов: "+Object.keys(hid).length+" · Скрытых сообщений: "+Object.keys(dmh).length+" · Своих имён контактов: "+Object.keys(al).length;
-  profile();if(k==="chat")chatSetUI();show("s-set");
+  profile();if(k==="chat")chatSetUI();if(k==="lang")buildLangs();show("s-set");
 }
-document.querySelectorAll(".srow").forEach(r=>r.onclick=()=>openSet(r.dataset.k,r.textContent.trim()));
+document.querySelectorAll(".srow").forEach(r=>r.onclick=()=>openSet(r.dataset.k,[...r.childNodes].filter(n=>!(n.classList&&(n.classList.contains("sic")||n.classList.contains("rv")))).map(n=>n.textContent).join("").trim()));
 document.querySelectorAll("#s-set .sw").forEach(x=>x.onchange=()=>{ss(x.dataset.k,x.checked?1:0);
   if(x.dataset.k==="bg"&&BM){try{x.checked?BM.enable():BM.disable()}catch(e){}}if(x.dataset.k==="seen")ping()});
 const WPS=[{v:""},{v:"linear-gradient(160deg,#1a1038,#3b1f5e)"},{v:"linear-gradient(160deg,#06141c,#0b4d5c)"},{v:"linear-gradient(160deg,#0a140d,#1f5a35)"},{v:"linear-gradient(160deg,#2a0f1a,#7a2a3a)"},{v:"linear-gradient(160deg,#101018,#2a2a3a)"},{v:"radial-gradient(circle at 30% 20%,rgba(255,122,89,.7),transparent 50%),linear-gradient(160deg,#17152f,#2a1450)"}];
@@ -764,6 +828,189 @@ applyWp();applyBr();applyL();applyLogo();
 $("setback").onclick=()=>home();
 $("dres").onclick=()=>{hid={};dmh={};js("hid",hid);js("dmh",dmh);location.reload()};
 $("dnam").onclick=()=>{al={};js("al",al);location.reload()};
+function buildLangs(){
+  const b=$("langs");b.innerHTML="";
+  Object.keys(window.LANGS).forEach(k=>{const d=document.createElement("button");d.className="lrow";const a=document.createElement("span");a.textContent=window.LANGS[k];const c=document.createElement("span");c.textContent=window.getLang()===k?"✓":"";c.style.color="var(--p)";d.append(a,c);
+    d.onclick=()=>{window.setLang(k);$("langv").textContent=window.LANGS[k];$("settitle").textContent=window.T("Язык");buildLangs()};b.appendChild(d)});
+}
+$("langv").textContent=window.LANGS[window.getLang()];
+
+/* ---------- новые функции: ответ, пересылка, правка, закреп, блок, истории, опросы, группы, кружки ---------- */
+const pins=jl("pins"),mutes=jl("mutes"),blk=new Set(Object.keys(jl("blk")));
+const pvf=k=>(pv[k]||[]).filter(m=>m.uid===me||!blk.has(m.uid));
+const gav=(el,g)=>{el.style.background=col(g.id);el.style.backgroundImage=g.ava?"url("+g.ava+")":"";el.style.backgroundSize="cover";el.textContent=g.ava?"":"👥"};
+function sheet(items){const sh=$("sheet"),b=$("sheetb");b.innerHTML="";
+  items.forEach(([t,f,danger])=>{const x=document.createElement("button");x.className="lrow";x.textContent=t;if(danger)x.style.color="#ff6b6b";x.onclick=()=>{sh.style.display="none";f()};b.appendChild(x)});
+  sh.style.display="flex"}
+$("sheet").onclick=e=>{if(e.target===$("sheet"))$("sheet").style.display="none"};
+/* закреп / заглушить / блок */
+const togPin=k=>{if(pins[k])delete pins[k];else pins[k]=1;js("pins",pins);renderList()};
+const togMute=k=>{if(mutes[k])delete mutes[k];else mutes[k]=1;js("mutes",mutes);renderList()};
+const saveBlk=()=>js("blk",Object.fromEntries([...blk].map(u=>[u,1])));
+function toggleBlock(u){
+  const was=blk.has(u);if(was)blk.delete(u);else blk.add(u);saveBlk();
+  setDoc(doc(db,"users",me),{blocked:was?arrayRemove(u):arrayUnion(u)},{merge:true}).catch(()=>{});
+  alert(was?"Пользователь разблокирован.":"Пользователь заблокирован. Его сообщения и звонки вы больше не увидите.");
+  renderList();if(base&&!grp&&pair&&pair.includes(u))openChat(u);
+}
+async function loadBlk(){try{const d=await getDoc(doc(db,"users",me));((d.data()||{}).blocked||[]).forEach(u=>blk.add(u));saveBlk();renderList()}catch(e){}}
+function rowMenu(l){const k=keyOf(l),it=[];
+  it.push([pins[k]?"📌 Открепить":"📌 Закрепить",()=>togPin(k)]);
+  it.push([mutes[k]?"🔔 Включить уведомления":"🔇 Заглушить",()=>togMute(k)]);
+  if(!l.g)it.push([blk.has(l.u)?"✅ Разблокировать":"🚫 Заблокировать",()=>toggleBlock(l.u),!blk.has(l.u)]);
+  it.push([l.g?"🗑 Убрать группу из списка":"🗑 Удалить чат",()=>{if(confirm((l.g?"Удалить группу «"+l.g.name+"» из списка?":"Удалить чат с "+nicks[l.u]+"?")+"\nОн появится снова, когда придёт новое сообщение.")){hid[k]=Date.now();js("hid",hid);renderList()}},true]);
+  sheet(it)}
+$("pvblk").onclick=()=>{$("pview").style.display="none";toggleBlock(pvu)};
+/* ответ / правка */
+let replyTo=null,editing=null;
+const mtxt=m=>m.poll?"📊 "+m.poll.q:m.text?m.text:m.stk?"Стикер":m.img?(m.img.startsWith("data:audio")?"🎤 Голосовое":m.img.startsWith("data:video")?(m.circ?"⭕ Кружок":"🎥 Видео"):"📷 Фото"):"";
+const rShow=t=>{$("rbar").style.display="flex";$("rtxt").textContent=t};
+function rClear(){replyTo=null;editing=null;$("rbar").style.display="none";const i=$("in");if(i.dataset.ed){i.value="";delete i.dataset.ed;upd()}}
+function setReply(m){editing=null;replyTo={n:m.uid===me?"Вы":(nicks[m.uid]||"Гость"),t:mtxt(m).slice(0,80)};rShow("↩ "+replyTo.n+": "+replyTo.t);$("in").focus()}
+function startEdit(ref,m){replyTo=null;editing={ref};$("in").value=m.text;$("in").dataset.ed="1";upd();rShow("✏️ Редактирование");$("in").focus()}
+$("rx").onclick=rClear;
+const selOne=()=>[...sel.values()][0];
+$("selre").onclick=()=>{const x=selOne();clearSel();setReply(x.m)};
+$("selfw").onclick=()=>{const x=selOne();clearSel();fwdMsg(x.m)};
+$("seled").onclick=()=>{const x=selOne();clearSel();startEdit(x.ref,x.m)};
+/* пересылка */
+function fwdMsg(m){
+  if(m.poll){alert("Опрос нельзя переслать.");return}
+  const tg=[...groups.map(g=>({n:g.name,b:["groups",g.id]})),...Object.values(links).map(l=>({n:nicks[l.u]||"Гость",b:["dms",pairId(me,l.u)],dm:pairId(me,l.u)}))];
+  if(!tg.length){alert("Нет чатов, куда можно переслать.");return}
+  sheet(tg.map(t=>["↪ "+t.n,async()=>{
+    const d={fwd:m.fwd||(m.uid===me?(myNick||"Вы"):(nicks[m.uid]||"Гость"))};
+    ["text","img","stk","dur","wf","circ"].forEach(k=>{if(m[k]!==undefined)d[k]=m[k]});
+    try{await addDoc(collection(db,...t.b,"msgs"),{uid:me,ts:Date.now(),...d});if(t.dm)updateDoc(doc(db,"links",t.dm),{chat:true}).catch(()=>{});alert("Переслано: "+t.n)}catch(e){alert("Не удалось переслать.")}}]))
+}
+/* поиск по сообщениям */
+function applySearch(){const q=($("csi").value||"").trim().toLowerCase();let n=0,first=null;
+  document.querySelectorAll("#log .msg").forEach(w=>{const hit=!q||w.textContent.toLowerCase().includes(q);w.style.opacity=hit?"":".22";if(q&&hit){n++;if(!first)first=w}});
+  $("csn").textContent=q?n:"";if(first)first.scrollIntoView({block:"center"})}
+const openSearch=()=>{$("csb").style.display="flex";$("csi").value="";$("csi").focus()};
+$("csi").oninput=applySearch;
+$("csx").onclick=()=>{$("csb").style.display="none";$("csi").value="";applySearch()};
+/* меню чата */
+$("cmore").onclick=()=>{
+  if(!base)return;const k=curKey,pu=pair?pair.split("__").find(x=>x!==me):null,it=[];
+  it.push(["🔍 Поиск по сообщениям",openSearch]);
+  it.push([pins[k]?"📌 Открепить чат":"📌 Закрепить чат",()=>togPin(k)]);
+  it.push([mutes[k]?"🔔 Включить уведомления":"🔇 Заглушить чат",()=>togMute(k)]);
+  if(grp){it.push(["📊 Создать опрос",newPoll]);it.push(["ℹ️ О группе",openGinfo])}
+  else if(pu)it.push([blk.has(pu)?"✅ Разблокировать":"🚫 Заблокировать",()=>toggleBlock(pu),!blk.has(pu)]);
+  sheet(it)};
+/* опросы (голоса хранятся в reactions, правила менять не нужно) */
+function newPoll(){
+  const q=(prompt("Вопрос опроса")||"").trim();if(!q)return;
+  const o=(prompt("Варианты ответа через запятую (2–6)")||"").split(",").map(x=>x.trim()).filter(Boolean).slice(0,6);
+  if(o.length<2){alert("Нужно минимум 2 варианта.");return}
+  post({text:"📊 "+q.slice(0,200),poll:{q:q.slice(0,200),opts:o.map(x=>x.slice(0,60))}})}
+function poll(w,d,m){
+  const vs={};Object.values(m.reactions||{}).forEach(v=>{if(typeof v==="string"&&v[0]==="v")vs[v]=(vs[v]||0)+1});
+  const tot=Object.values(vs).reduce((a,b)=>a+b,0),my=(m.reactions||{})[me];
+  const q=document.createElement("div");q.className="tx";q.style.fontWeight="700";q.textContent="📊 "+m.poll.q;w.appendChild(q);
+  m.poll.opts.forEach((o,i)=>{const k="v"+i,c=vs[k]||0,pc=tot?Math.round(c*100/tot):0,b=document.createElement("button");
+    b.style.cssText="display:block;width:100%;text-align:left;margin-top:6px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;color:inherit;font:inherit;background:linear-gradient(90deg,rgba(255,255,255,.2) "+pc+"%,transparent "+pc+"%)";
+    b.textContent=(my===k?"✓ ":"")+o+" — "+c+" ("+pc+"%)";b.onclick=e=>{e.stopPropagation();updateDoc(d.ref,{["reactions."+me]:k}).catch(()=>{})};w.appendChild(b)});
+  const f=document.createElement("div");f.className="dim";f.style.fontSize="12px";f.textContent="Голосов: "+tot;w.appendChild(f)}
+/* фото / видео с подписью */
+let capD=null;
+function openCap(url,vd){capD=url;const m=$("capm");m.innerHTML="";const e=document.createElement(vd?"video":"img");e.src=url;if(vd){e.controls=true;e.playsInline=true}e.style.cssText="max-width:100%;max-height:100%";m.appendChild(e);$("capt").value="";$("cap").style.display="flex"}
+$("capx").onclick=()=>{$("cap").style.display="none";capD=null};
+$("capok").onclick=async()=>{const t=$("capt").value.trim(),d={img:capD};if(t)d.text=t.slice(0,1000);$("cap").style.display="none";capD=null;await post(d)};
+function vid(w,m){
+  if(m.circ){const c=document.createElement("div");c.style.cssText="width:200px;height:200px;border-radius:50%;overflow:hidden;position:relative;background:#000";
+    const v=document.createElement("video");v.src=m.img+"#t=0.1";v.playsInline=true;v.preload="auto";v.style.cssText="width:100%;height:100%;object-fit:cover";
+    const ic=document.createElement("div");ic.textContent="▶";ic.style.cssText="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:40px;color:#fff;text-shadow:0 0 8px #000";c.append(v,ic);
+    c.onclick=e=>{e.stopPropagation();if(v.paused){document.querySelectorAll("#log video").forEach(x=>{if(x!==v)x.pause()});v.play().catch(()=>{});ic.style.display="none"}else{v.pause();ic.style.display="flex"}};
+    v.onended=()=>{ic.style.display="flex";v.currentTime=0};w.appendChild(c)}
+  else{const v=document.createElement("video");v.src=m.img;v.controls=true;v.playsInline=true;v.className="pic";v.onclick=e=>e.stopPropagation();w.appendChild(v)}}
+/* кружки */
+let cc=null,cheld=false;
+function camStop(cancel){if(!cc)return;cc.cancel=cancel;if(cc.mr.state!=="inactive")cc.mr.stop()}
+async function camStart(e){
+  if(!base||cc||rc)return;
+  let st;try{st=await navigator.mediaDevices.getUserMedia({audio:true,video:{facingMode:"user",width:{ideal:240},height:{ideal:240}}})}catch(x){alert("Нет доступа к микрофону или камере. Разрешите его в настройках.");return}
+  if(!cheld){st.getTracks().forEach(t=>t.stop());return}
+  const mt=["video/webm;codecs=vp8,opus","video/webm"].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t))||"";
+  let mr;try{mr=new MediaRecorder(st,{...(mt?{mimeType:mt}:{}),videoBitsPerSecond:150000,audioBitsPerSecond:24000})}catch(x){st.getTracks().forEach(t=>t.stop());alert("Запись видео не поддерживается.");return}
+  const ch=[],t0=Date.now(),pvw=$("circp");pvw.srcObject=st;pvw.play().catch(()=>{});$("circw").style.display="flex";$("circt").textContent="0:00";
+  const iv=setInterval(()=>{const q=Math.floor((Date.now()-t0)/1000);$("circt").textContent=mmss(q);if(q>=20)camStop(false)},200);
+  mr.ondataavailable=ev=>{if(ev.data.size)ch.push(ev.data)};
+  mr.onstop=async()=>{clearInterval(iv);st.getTracks().forEach(t=>t.stop());$("circw").style.display="none";pvw.srcObject=null;
+    const cancel=cc&&cc.cancel,dur=Math.max(1,Math.round((Date.now()-t0)/1000));cc=null;if(cancel||Date.now()-t0<800)return;
+    const url=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(new Blob(ch,{type:mt||"video/webm"}))});
+    if(url.length>780000){alert("Кружок слишком длинный.");return}
+    post({img:url,dur,circ:1})};
+  cc={mr,cancel:false,x0:e.clientX};mr.start(1000);if(navigator.vibrate)navigator.vibrate(25);
+}
+const cam=$("cam");
+cam.onpointerdown=e=>{e.preventDefault();cheld=true;cam.setPointerCapture(e.pointerId);camStart(e)};
+cam.onpointermove=e=>{if(cc&&e.clientX-cc.x0<-110)camStop(true)};
+cam.onpointerup=cam.onpointercancel=()=>{cheld=false;camStop(false)};
+cam.oncontextmenu=e=>e.preventDefault();
+/* истории */
+let stories=[];const STBG=["linear-gradient(160deg,#ff7a59,#a26bff)","linear-gradient(160deg,#22c1c3,#3b82f6)","linear-gradient(160deg,#f2b134,#e85d9a)","linear-gradient(160deg,#25d366,#0b4d5c)","linear-gradient(160deg,#5b8def,#7c5cff)","linear-gradient(160deg,#e85d9a,#ff2fd0)"];
+const watchStories=()=>onSnapshot(query(collection(db,"stories"),where("viewers","array-contains",me)),s=>{
+  const lim=Date.now()-864e5;stories=[];
+  s.docs.forEach(d=>{const v=d.data();if(v.ts>lim)stories.push({id:d.id,...v});else if(v.uid===me)deleteDoc(d.ref).catch(()=>{})});
+  stories.sort((a,b)=>a.ts-b.ts);renderStories()},()=>{});
+async function renderStories(){
+  const bar=$("stbar"),by={};stories.forEach(x=>(by[x.uid]=by[x.uid]||[]).push(x));
+  const us=[me,...Object.keys(by).filter(u=>u!==me)];for(const u of us)if(u!==me)await nickOf(u);
+  bar.innerHTML="";
+  us.forEach(u=>{const own=u===me,d=document.createElement("button");d.className="stb";
+    const a=document.createElement("div");a.className="av";a.style.cssText="width:58px;height:58px;font-size:22px;position:relative;"+(by[u]?"box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--p)":"");mkav(a,own?myNick:nicks[u],u);
+    if(own&&!by[u]){const p=document.createElement("span");p.textContent="＋";p.className="stp";a.appendChild(p)}
+    const n=document.createElement("div");n.className="dim";n.style.cssText="font-size:12px;max-width:66px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap";n.textContent=own?"Моя история":(nicks[u]||"");
+    d.append(a,n);d.onclick=()=>own?(by[u]?sheet([["▶ Смотреть",()=>openStory(u)],["＋ Добавить историю",addStory]]):addStory()):openStory(u);bar.appendChild(d)})}
+function addStory(){sheet([["📷 Фото",()=>$("stf").click()],["✍️ Текст",()=>{const t=(prompt("Текст истории")||"").trim();if(t)pubStory({text:t.slice(0,300),img:"",bg:STBG[Math.floor(Math.random()*STBG.length)]})}]])}
+$("stf").onchange=async function(){const f=this.files[0];this.value="";if(!f)return;
+  try{const im=await loadImg(f);let sc=Math.min(1,720/Math.max(im.width,im.height)),q=.65,url="";const c=document.createElement("canvas");
+    for(let i=0;i<4;i++){c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext("2d").drawImage(im,0,0,c.width,c.height);url=c.toDataURL("image/jpeg",q);if(url.length<300000)break;sc*=.8;q-=.1}
+    const cap=(prompt("Подпись (необязательно)")||"").trim();pubStory({img:url,text:cap.slice(0,200),bg:""})}
+  catch(e){alert("Не удалось открыть картинку. Попробуйте другую.")}};
+async function pubStory(d){const vs=[...new Set([me,...Object.values(links).map(l=>l.u)])].slice(0,200);
+  try{await addDoc(collection(db,"stories"),{uid:me,ts:Date.now(),viewers:vs,...d});alert("История опубликована на 24 часа.")}catch(e){alert("Не удалось опубликовать историю.")}}
+let svT=null;
+function openStory(u){
+  const L=stories.filter(x=>x.uid===u);if(!L.length)return;let i=0;const v=$("stv");v.style.display="flex";
+  const close=()=>{clearTimeout(svT);v.style.display="none"};
+  const next=()=>{if(i<L.length-1){i++;show()}else close()};
+  const show=()=>{clearTimeout(svT);const s=L[i],bs=$("stbars");bs.innerHTML="";
+    L.forEach((_,j)=>{const b=document.createElement("div");b.style.cssText="flex:1;height:3px;border-radius:2px;overflow:hidden;background:rgba(255,255,255,"+(j<i?".95":".3")+")";
+      if(j===i){const f=document.createElement("div");f.style.cssText="height:100%;width:0;background:#fff;transition:width 5s linear";b.appendChild(f);requestAnimationFrame(()=>requestAnimationFrame(()=>f.style.width="100%"))}bs.appendChild(b)});
+    $("stwho").textContent=(u===me?"Моя история":(nicks[u]||""))+" · "+hhmm(s.ts);$("stdel").style.display=u===me?"":"none";
+    const m=$("stmedia");m.innerHTML="";m.style.background=s.bg||"#000";$("stcap").textContent="";
+    if(s.img){const im=document.createElement("img");im.src=s.img;im.style.cssText="max-width:100%;max-height:100%;object-fit:contain";m.appendChild(im);$("stcap").textContent=s.text||""}
+    else{const t=document.createElement("div");t.textContent=s.text||"";t.style.cssText="font-size:26px;font-weight:700;text-align:center;padding:24px;word-break:break-word";m.appendChild(t)}
+    svT=setTimeout(next,5000)};
+  $("stmedia").onclick=e=>{const r=$("stmedia").getBoundingClientRect();if(e.clientX-r.left<r.width/3){i=Math.max(0,i-1);show()}else next()};
+  $("stx").onclick=close;
+  $("stdel").onclick=async()=>{if(confirm("Удалить историю?")){try{await deleteDoc(doc(db,"stories",L[i].id))}catch(e){}close()}};
+  show()}
+/* группы: админ, приглашение, выход */
+async function openGinfo(){
+  if(!grp)return;const g=groups.find(x=>x.id===grp.id)||grp,owner=g.owner===me;
+  $("gin").value=g.name;$("gin").disabled=!owner;$("ginsave").style.display=owner?"":"none";$("ginava").style.display=owner?"":"none";
+  gav($("ginav"),g);const b=$("ginm");b.innerHTML="";$("ginfo").style.display="flex";
+  for(const u of g.members){await nickOf(u);const r=document.createElement("div");r.className="row";r.style.cssText="padding:8px 0";
+    const a=document.createElement("div");a.className="av";mkav(a,nicks[u],u);const n=document.createElement("div");n.style.flex="1";n.textContent=(nicks[u]||"Гость")+(u===g.owner?" 👑":"")+(u===me?" (вы)":"");r.append(a,n);
+    if(owner&&u!==me){const x=document.createElement("button");x.className="ib";x.textContent="✕";x.onclick=async()=>{if(confirm("Удалить участника из группы?")){try{await updateDoc(doc(db,"groups",g.id),{members:arrayRemove(u)});r.remove()}catch(e){alert("Не удалось удалить участника.")}}};r.appendChild(x)}
+    b.appendChild(r)}}
+$("ginx").onclick=()=>$("ginfo").style.display="none";
+$("ginsave").onclick=async()=>{const n=$("gin").value.trim();if(!n)return;try{await updateDoc(doc(db,"groups",grp.id),{name:n.slice(0,40)});alert("Сохранено ✓")}catch(e){alert("Не удалось сохранить.")}};
+$("ginava").onclick=()=>$("gif").click();
+$("gif").onchange=async function(){const f=this.files[0];this.value="";if(!f)return;
+  try{const im=await loadImg(f),m=Math.min(im.width,im.height),c=document.createElement("canvas");c.width=c.height=160;c.getContext("2d").drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,160,160);
+    await updateDoc(doc(db,"groups",grp.id),{ava:c.toDataURL("image/jpeg",.7)});setTimeout(openGinfo,300)}
+  catch(e){alert("Не удалось сохранить фото.")}};
+$("ginlink").onclick=()=>{const c="orbita-join:"+grp.id;try{navigator.clipboard.writeText(c);alert("Код приглашения скопирован. Отправьте его другу: в приложении меню ⋮ на вкладке «Чаты» → «Вступить в группу по коду».")}catch(e){prompt("Код приглашения",c)}};
+$("ginleave").onclick=async()=>{const g=groups.find(x=>x.id===grp.id)||grp;if(g.owner===me){alert("Владелец не может выйти из группы.");return}
+  if(confirm("Выйти из группы?")){try{await updateDoc(doc(db,"groups",grp.id),{members:arrayRemove(me)});$("ginfo").style.display="none";$("back").click()}catch(e){alert("Не удалось выйти.")}}};
+$("joing").onclick=async()=>{const c=(prompt("Код приглашения")||"").trim().replace(/^orbita-join:/,"");if(!c)return;
+  try{await updateDoc(doc(db,"groups",c),{members:arrayUnion(me)});alert("Вы вступили в группу.")}catch(e){alert("Не удалось вступить. Проверьте код.")}};
+
 $("t4").onclick=()=>setTab(4);
 $("t1").onclick=()=>setTab(1);$("t2").onclick=()=>setTab(2);$("t3").onclick=()=>{setTab(3);profile()};
 $("pavb").onclick=()=>$("pavf").click();
@@ -789,13 +1036,16 @@ $("in").addEventListener("input",()=>{const t=Date.now();if(pair&&gs("typ")&&t-l
 $("ph").onclick=()=>$("pf").click();
 $("pf").onchange=async function(){
   const f=this.files[0];this.value="";if(!f||!base)return;
-  const im=new Image();im.src=URL.createObjectURL(f);await im.decode().catch(()=>{});
-  let sc=Math.min(1,900/Math.max(im.width,im.height)),q=.7,url="";
-  const c=document.createElement("canvas");
-  for(let i=0;i<4;i++){c.width=im.width*sc;c.height=im.height*sc;c.getContext("2d").drawImage(im,0,0,c.width,c.height);url=c.toDataURL("image/jpeg",q);if(url.length<700000)break;sc*=.7;q-=.1}
+  if(f.type.startsWith("video/")){
+    if(f.size>440000){alert("Видео слишком большое для отправки (до ~0,4 МБ). Запишите кружок (до 20 сек) или короткое видео.");return}
+    const url=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(f)});
+    if(url.length>=780000){alert("Видео слишком большое для отправки.");return}
+    openCap(url,true);return}
+  const im=await loadImg(f).catch(()=>null);if(!im){alert("Не удалось открыть картинку. Попробуйте другую.");return}
+  let sc=Math.min(1,900/Math.max(im.width,im.height)),q=.7,url="";const c=document.createElement("canvas");
+  for(let i=0;i<4;i++){c.width=Math.round(im.width*sc);c.height=Math.round(im.height*sc);c.getContext("2d").drawImage(im,0,0,c.width,c.height);url=c.toDataURL("image/jpeg",q);if(url.length<700000)break;sc*=.7;q-=.1}
   if(url.length>=800000){alert("Фото слишком большое.");return}
-  await post({img:url});
-};
+  openCap(url,false)};
 $("in").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&!/Mobi|Android/i.test(navigator.userAgent)){e.preventDefault();send()}});
 $("in").addEventListener("input",function(){this.style.height="auto";this.style.height=Math.min(this.scrollHeight,120)+"px"});
 
