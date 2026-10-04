@@ -220,7 +220,8 @@ input,textarea{-webkit-user-select:text;user-select:text}
 <div class="cb" id="caccw"><button id="cacc" style="background:#2fbf71">📞</button>Принять</div>
 <div class="cb"><button id="cend" style="background:#e5484d">✕</button>Завершить</div></div></div>
 <script type="module">
-import {cfg,turn} from "./firebase-config.js";
+import * as CFG from "./firebase-config.js";
+const cfg=CFG.cfg,turn=CFG.turn||[];
 const $=i=>document.getElementById(i);
 const COL=["#ff7a59","#a26bff","#22c1c3","#f2b134","#e85d9a","#5b8def"];
 const col=id=>{let h=0;for(const c of id)h=(h*31+c.charCodeAt(0))>>>0;return COL[h%COL.length]};
@@ -408,7 +409,18 @@ function openChat(u,g){
   });
 }
 let call=null,inc=null;
-const ICE=[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"},...turn];
+const STUN=[{urls:"stun:stun.l.google.com:19302"},{urls:"stun:stun1.l.google.com:19302"}];
+const OPEN={urls:["turn:openrelay.metered.ca:80","turn:openrelay.metered.ca:443","turn:openrelay.metered.ca:443?transport=tcp"],username:"openrelayproject",credential:"openrelayproject"};
+let ICE=[...STUN,...turn],iceAt=0;
+const hasTurn=l=>l.some(x=>JSON.stringify(x.urls).includes("turn:"));
+async function getIce(){
+  if(Date.now()-iceAt<600000)return;
+  let l=[...STUN,...turn];
+  if(CFG.turnApi){try{const ac=new AbortController(),to=setTimeout(()=>ac.abort(),4000),r=await fetch(CFG.turnApi,{signal:ac.signal});clearTimeout(to);const j=await r.json();if(Array.isArray(j))l=[...l,...j]}catch(e){}}
+  if(!hasTurn(l))l=[...l,OPEN];
+  ICE=l;iceAt=Date.now();
+}
+function armConn(pc){if(call){clearTimeout(call.ct);call.ct=setTimeout(()=>{if(call&&call.pc===pc&&pc.connectionState!=="connected"){$("ctext").textContent="Не удалось соединиться";setTimeout(()=>endCall(true),1500)}},30000)}}
 function ui(on,txt,ring,pid){
   $("callui").style.display=on?"flex":"none";$("ctext").textContent=txt||"";$("caccw").style.display=ring?"":"none";$("cav2").classList.toggle("pulse",on);
   if(on){if(pid){$("cname2").textContent=nicks[pid]||"Гость";mkav($("cav2"),nicks[pid],pid)}$("rv").volume=1;$("cspk").classList.add("on")}
@@ -420,33 +432,34 @@ function mkpc(cid,stream){
   stream.getTracks().forEach(t=>pc.addTrack(t,stream));
   pc.ontrack=e=>{$("rv").srcObject=e.streams[0];if(e.streams[0].getVideoTracks().length){$("rv").style.opacity=1;$("lv").style.display="block";$("cav2").style.display="none"}};
   pc.onicecandidate=e=>{if(e.candidate)addDoc(collection(db,"calls",cid,"ice"),{from:me,c:JSON.stringify(e.candidate)}).catch(()=>{})};
-  pc.onconnectionstatechange=()=>{if(pc.connectionState==="connected"&&call&&!call.iv){call.t0=Date.now();$("cav2").classList.remove("pulse");call.iv=setInterval(()=>{const q=Math.floor((Date.now()-call.t0)/1000);$("ctext").textContent=String(Math.floor(q/60)).padStart(2,"0")+":"+String(q%60).padStart(2,"0")},500)}if(pc.connectionState==="failed")endCall(true)};
+  pc.onconnectionstatechange=()=>{if(pc.connectionState==="connected"&&call&&!call.iv){clearTimeout(call.ct);call.t0=Date.now();$("cav2").classList.remove("pulse");call.iv=setInterval(()=>{const q=Math.floor((Date.now()-call.t0)/1000);$("ctext").textContent=String(Math.floor(q/60)).padStart(2,"0")+":"+String(q%60).padStart(2,"0")},500)}if(pc.connectionState==="failed"){$("ctext").textContent="Не удалось соединиться";setTimeout(()=>endCall(true),1200)}};
+  pc.oniceconnectionstatechange=()=>{if(pc.iceConnectionState==="disconnected"&&call)$("ctext").textContent="Связь прервалась…"};
   $("lv").srcObject=stream;
   call={pc,cid,stream,un:[]};
   call.un.push(onSnapshot(doc(db,"calls",cid),d=>{const v=d.data();if(v&&v.status==="ended")endCall(false)}));
   return pc;
 }
-function listenIce(){call.un.push(onSnapshot(collection(db,"calls",call.cid,"ice"),s=>s.docChanges().forEach(ch=>{if(ch.type==="added"&&ch.doc.data().from!==me)call.pc.addIceCandidate(JSON.parse(ch.doc.data().c)).catch(()=>{})})))}
+function listenIce(){call.un.push(onSnapshot(collection(db,"calls",call.cid,"ice"),s=>s.docChanges().forEach(ch=>{if(ch.type==="added"&&ch.doc.data().from!==me){const pc=call.pc,c=JSON.parse(ch.doc.data().c),f=()=>{if(!call||call.pc!==pc)return;pc.remoteDescription?pc.addIceCandidate(c).catch(()=>{}):setTimeout(f,300)};f()}})))}
 function endCall(notify){
   if(!call)return;const c=call;call=null;
-  clearInterval(c.iv);c.un.forEach(u=>u());c.pc.close();c.stream.getTracks().forEach(t=>t.stop());
+  clearInterval(c.iv);clearTimeout(c.ct);c.un.forEach(u=>u());c.pc.close();c.stream.getTracks().forEach(t=>t.stop());
   $("rv").srcObject=null;$("lv").srcObject=null;ui(false);
   if(notify)updateDoc(doc(db,"calls",c.cid),{status:"ended"}).catch(()=>{});
   setTimeout(()=>deleteDoc(doc(db,"calls",c.cid)).catch(()=>{}),4000);
 }
 async function startCall(video){
   if(!pair||call)return;
-  const peer=pair.split("__").find(x=>x!==me),stream=await media(video);if(!stream)return;
+  const peer=pair.split("__").find(x=>x!==me),stream=await media(video);if(!stream)return;await getIce();
   const cid=Date.now()+"",pc=mkpc(cid,stream);ui(true,"Вызываем…",false,peer);
   try{
     await setDoc(doc(db,"calls",cid),{from:me,to:peer,video,status:"ringing",ts:Date.now()});
     await pc.setLocalDescription(await pc.createOffer());
     await updateDoc(doc(db,"calls",cid),{offer:{type:pc.localDescription.type,sdp:pc.localDescription.sdp}});
   }catch(e){alert("Не удалось начать звонок.");endCall(false);return}
-  call.un.push(onSnapshot(doc(db,"calls",cid),async d=>{const v=d.data();if(v&&v.answer&&!pc.currentRemoteDescription){await pc.setRemoteDescription(v.answer);listenIce();$("ctext").textContent="Соединяем…"}}));
+  call.un.push(onSnapshot(doc(db,"calls",cid),async d=>{const v=d.data();if(v&&v.answer&&!pc.currentRemoteDescription){await pc.setRemoteDescription(v.answer);listenIce();armConn(pc);$("ctext").textContent="Соединяем…"}}));
   setTimeout(()=>{if(call&&call.cid===cid&&!pc.currentRemoteDescription)endCall(true)},45000);
 }
-function watchCalls(){
+function watchCalls(){getIce();
   onSnapshot(query(collection(db,"calls"),where("to","==",me)),s=>s.docChanges().forEach(async ch=>{
     const v=ch.doc.data(),id=ch.doc.id;
     if(ch.type==="removed"||v.status!=="ringing"){if(inc&&inc.id===id){inc=null;if(!call)ui(false)}return}
@@ -462,9 +475,9 @@ $("cacc").onclick=async()=>{
   if(!inc)return;const {id,v}=inc;inc=null;
   const stream=await media(v.video);
   if(!stream){updateDoc(doc(db,"calls",id),{status:"ended"}).catch(()=>{});ui(false);return}
-  const pc=mkpc(id,stream);
+  await getIce();const pc=mkpc(id,stream);
   try{
-    await pc.setRemoteDescription(v.offer);listenIce();
+    await pc.setRemoteDescription(v.offer);listenIce();armConn(pc);
     await pc.setLocalDescription(await pc.createAnswer());
     await updateDoc(doc(db,"calls",id),{answer:{type:pc.localDescription.type,sdp:pc.localDescription.sdp},status:"active"});
   }catch(e){endCall(true);return}
