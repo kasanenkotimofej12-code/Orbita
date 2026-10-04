@@ -418,8 +418,8 @@ const TH=[
 {n:"Лес",bg:"#0a140d",bgi:"linear-gradient(160deg,#0f2a17,#1c4a2a 60%,#0a140d)",card:"#12281a",line:"#265a36",p:"#7bdc6a",q:"#2fb37a",txt:"#eaffee",dim:"#8fbf9a"},
 {n:"Неон",bg:"#0a0014",bgi:"radial-gradient(circle at 20% 10%,#3a0070,#0a0014 60%)",card:"#1a0030",line:"#4a0a7a",p:"#ff2fd0",q:"#00e5ff",txt:"#fdeaff",dim:"#b98ad0"},
 {n:"Светлая",bg:"#f4f3ff",bgi:"none",card:"#ffffff",line:"#d9d6f5",p:"#ff7a59",q:"#7c5cff",txt:"#1b1840",dim:"#6b68a0"}];
-let thi=0;try{thi=+localStorage.getItem("th")||0}catch(e){}
-function theme(i){thi=i;const t=TH[i],r=document.documentElement.style;["bg","card","line","p","q","txt","dim"].forEach(k=>r.setProperty("--"+k,t[k]));r.setProperty("--bgi",t.bgi);document.querySelector('meta[name=theme-color]').content=t.bg;try{localStorage.setItem("th",i)}catch(e){}}
+let thi=5;try{const v=localStorage.getItem("th2");if(v!==null)thi=+v}catch(e){}
+function theme(i){thi=i;const t=TH[i],r=document.documentElement.style;["bg","card","line","p","q","txt","dim"].forEach(k=>r.setProperty("--"+k,t[k]));r.setProperty("--bgi",t.bgi);r.setProperty("--mine",t.mine||"");document.querySelector('meta[name=theme-color]').content=t.bg;try{localStorage.setItem("th2",i)}catch(e){}}
 theme(thi);
 function profile(){
   const cu=auth.currentUser;$("pemail").textContent=cu&&cu.isAnonymous?"Аккаунт не сохранён: если удалить приложение, ник и друзья пропадут. Привяжите почту:":(cu&&cu.email)||"";$("lnk").style.display=cu&&cu.isAnonymous?"flex":"none";
