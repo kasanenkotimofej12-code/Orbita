@@ -124,6 +124,11 @@ input,textarea{-webkit-user-select:text;user-select:text}
 #rbar{display:none;align-items:center;gap:10px;padding:8px 14px;border-top:1px solid var(--line);background:var(--card);flex:none}
 #csb{display:none;align-items:center;gap:8px;padding:6px 12px;border-bottom:1px solid var(--line);flex:none}
 #csb input{flex:1}
+#ipill{flex:1;min-width:0;display:flex;align-items:center;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:26px;padding:2px 4px}
+#ipill .ib{background:none;border:0;width:40px;height:40px;flex:none;display:flex;align-items:center;justify-content:center}
+#ipill #in{background:none;border:0;border-radius:0;padding:10px 4px;flex:1;min-width:0}
+#send,#mic{width:48px;height:48px;flex:none;border:0;border-radius:50%;background:var(--p);color:#0b1117;display:flex;align-items:center;justify-content:center;touch-action:none;position:relative;z-index:2;padding:0}
+.pic{width:auto;height:auto;max-width:100%;max-height:360px;object-fit:contain}
 </style>
 </head>
 <body>
@@ -197,7 +202,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
   <div id="csb"><input id="csi" placeholder="Поиск по сообщениям" autocomplete="off"><span id="csn" class="dim"></span><button class="ib" id="csx">✕</button></div>
   <div id="log"></div>
   <div id="panel" style="display:none;border-top:1px solid var(--line);max-height:230px;overflow-y:auto;padding:0 8px 8px"><div class="tabs"><button id="pe" class="on">Смайлики</button><button id="ps">Стикеры</button></div><div id="pbody" style="display:flex;flex-wrap:wrap;gap:6px;padding-top:8px"></div></div>
-<div id="rbar"><div id="rtxt" style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div><button class="ib" id="rx">✕</button></div><footer><button class="ib" id="em">😊</button><button class="ib" id="ph">📷</button><input type="file" id="sf" accept="image/*" hidden><input type="file" id="pf" accept="image/*,video/*" hidden><textarea id="in" rows="1" placeholder="Сообщение…"></textarea><button id="send" style="display:none">➤</button><button id="cam" class="ib" style="width:44px;height:44px;touch-action:none;position:relative;z-index:2;font-size:20px">⭕</button><button id="mic" class="ib" style="width:44px;height:44px;touch-action:none;position:relative;z-index:2;background:var(--p);color:#0b1117;border:0">🎤</button><div id="rec"><span class="recdot"></span><span id="rect">0:00</span><span id="recl" style="margin-left:14px">‹ Влево — отмена</span></div></footer>
+<div id="rbar"><div id="rtxt" style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div><button class="ib" id="rx">✕</button></div><footer><div id="ipill"><button class="ib" id="em">😊</button><textarea id="in" rows="1" placeholder="Сообщение…"></textarea><button class="ib" id="ph" aria-label="Прикрепить"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 11.5l-8.2 8.2a5 5 0 0 1-7.1-7.1l8.6-8.6a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg></button></div><input type="file" id="sf" accept="image/*" hidden><input type="file" id="pf" accept="image/*,video/*" hidden><button id="send" style="display:none" aria-label="Отправить"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.5l17-8-6.5 17-3-7z"/></svg></button><button id="mic" aria-label="Голосовое / кружок"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><div id="rec"><span class="recdot"></span><span id="rect">0:00</span><span id="recl" style="margin-left:14px">‹ Влево — отмена</span></div></footer>
 </div>
 
 <div id="ed" style="display:none;position:fixed;inset:0;z-index:9;flex-direction:column;background:#0b1117;color:#fff;padding-top:env(safe-area-inset-top,0px)">
@@ -698,7 +703,7 @@ $("selx").onclick=clearSel;
 $("seldel").onclick=()=>askDelMany([...sel.values()]);
 $("selcp").onclick=()=>{const x=[...sel.values()][0];try{navigator.clipboard.writeText(x.text)}catch(e){}clearSel()};
 $("dno").onclick=()=>$("dlg").style.display="none";
-const upd=()=>{const v=$("in").value.trim();$("send").style.display=v?"":"none";$("mic").style.display=v?"none":"";$("cam").style.display=v?"none":""};
+const upd=()=>{const v=$("in").value.trim();$("send").style.display=v?"":"none";$("mic").style.display=v?"none":""};
 $("in").addEventListener("input",upd);
 const mmss=t=>Math.floor(t/60)+":"+("0"+Math.floor(t%60)).slice(-2);
 let pa=null,pid=null,vui=null,prate=1;
@@ -724,7 +729,7 @@ function voice(w,id,m){
   const tt=document.createElement("div");tt.className="dim";tt.style.cssText="font-size:13px;margin-top:2px";tt.textContent=mmss(dur);
   w.append(v,tt);
   const dr=()=>pa&&isFinite(pa.duration)&&pa.duration>0?pa.duration:dur;
-  const ui=()=>{const on=pid===id&&pa,t=on?pa.currentTime:0,f=on&&dr()?Math.min(1,t/dr()):0;
+  const ui=()=>{const on=pid===id&&pa&&(!pa.paused||pa.currentTime>.05),t=on?pa.currentTime:0,f=on&&dr()?Math.min(1,t/dr()):0;
     b.innerHTML=on&&!pa.paused?PAUSE:PLAY;sp.innerHTML=on?(prate===1.5?"1.5":prate)+"×":MICI;
     fill.style.width=(f*100)+"%";th.style.display=on?"block":"none";th.style.left=(f*100)+"%";tt.textContent=mmss(on?t:dur)};
   const act=()=>{if(pid===id&&pa)return;if(pa)pa.pause();pa=loadAudio(m);pid=id;vui=ui;pa.playbackRate=prate;
@@ -746,7 +751,7 @@ function recStop(cancel){if(!rc)return;rc.cancel=cancel;if(rc.mr.state!=="inacti
 async function recStart(e){
   if(!base||rc)return;
   let st;try{st=await navigator.mediaDevices.getUserMedia({audio:true})}catch(x){alert("Нет доступа к микрофону. Разрешите его в настройках.");return}
-  if(!held){st.getTracks().forEach(t=>t.stop());return}
+  if(!held){st.getTracks().forEach(t=>t.stop());hintPerm();return}
   const mt=["audio/webm;codecs=opus","audio/ogg;codecs=opus","audio/mp4"].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t))||"";
   let mr;try{mr=new MediaRecorder(st,mt?{mimeType:mt,audioBitsPerSecond:24000}:{audioBitsPerSecond:24000})}catch(x){st.getTracks().forEach(t=>t.stop());alert("Запись голоса не поддерживается.");return}
   const ch=[],wf=[],t0=Date.now();let ac=null,an=null,buf=null;
@@ -755,19 +760,24 @@ async function recStart(e){
     if(an){an.getByteTimeDomainData(buf);let m=0;for(const v of buf)m=Math.max(m,Math.abs(v-128));wf.push(m)}
     if(q>=120)recStop(false)},150);
   mr.ondataavailable=ev=>{if(ev.data.size)ch.push(ev.data)};
-  mr.onstop=async()=>{clearInterval(iv);st.getTracks().forEach(t=>t.stop());if(ac)ac.close().catch(()=>{});$("rec").style.display="none";$("cam").style.visibility="";
+  mr.onstop=async()=>{clearInterval(iv);st.getTracks().forEach(t=>t.stop());if(ac)ac.close().catch(()=>{});$("rec").style.display="none";
     const cancel=rc&&rc.cancel,dur=Math.max(1,Math.round((Date.now()-t0)/1000));rc=null;
     if(cancel||Date.now()-t0<700)return;
-    const url=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(new Blob(ch,{type:mt||"audio/webm"}))});
+    const url=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(new Blob(ch,{type:(mt||"audio/webm").split(";")[0]}))});
     if(url.length>780000){alert("Голосовое слишком длинное.");return}
     const N=32,bars=[];for(let i=0;i<N;i++){const a=wf.slice(Math.floor(i*wf.length/N),Math.floor((i+1)*wf.length/N));const mx=a.length?Math.max(...a):20;bars.push(Math.min(9,Math.round(mx/128*9*1.8)))}
     post({img:url,dur,wf:bars.join("")})};
-  rc={mr,cancel:false,x0:e.clientX};mr.start(1000);$("rect").textContent="0:00";$("recl").style.opacity=1;$("rec").style.display="flex";$("cam").style.visibility="hidden";if(navigator.vibrate)navigator.vibrate(25);
+  rc={mr,cancel:false,x0:e.clientX};mr.start(1000);$("rect").textContent="0:00";$("recl").style.opacity=1;$("rec").style.display="flex";if(navigator.vibrate)navigator.vibrate(25);
 }
-const mic=$("mic");
-mic.onpointerdown=e=>{e.preventDefault();held=true;mic.setPointerCapture(e.pointerId);recStart(e)};
-mic.onpointermove=e=>{if(!rc)return;const dx=e.clientX-rc.x0;$("recl").style.opacity=Math.max(.25,1+dx/220);if(dx<-110)recStop(true)};
-mic.onpointerup=mic.onpointercancel=()=>{held=false;recStop(false)};
+const mic=$("mic");let mmode="a",mtm=null,mrec=false,mx0=0;
+const MIC_I=`<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>`,CIRC_I=`<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><rect x="7" y="9.5" width="6" height="5" rx="1.2"/><path d="M13 11.3l3.6-1.8v5l-3.6-1.8z"/></svg>`;
+const micIcon=()=>{mic.innerHTML=mmode==="a"?MIC_I:CIRC_I};micIcon();
+mic.onpointerdown=e=>{e.preventDefault();mic.setPointerCapture(e.pointerId);mx0=e.clientX;mrec=false;held=true;cheld=true;
+  mtm=setTimeout(()=>{mrec=true;mmode==="a"?recStart(e):camStart(e)},260)};
+mic.onpointermove=e=>{if(!mrec)return;const dx=e.clientX-mx0;
+  if(mmode==="a"){if(rc){$("recl").style.opacity=Math.max(.25,1+dx/220);if(dx<-110)recStop(true)}}else if(cc&&dx<-110)camStop(true)};
+mic.onpointerup=mic.onpointercancel=()=>{clearTimeout(mtm);held=false;cheld=false;
+  if(mrec){mrec=false;mmode==="a"?recStop(false):camStop(false)}else{mmode=mmode==="a"?"v":"a";micIcon()}};
 mic.oncontextmenu=e=>e.preventDefault();
 let cfgS=jl("st");
 const gs=(k,d=1)=>cfgS[k]===undefined?d:cfgS[k],ss=(k,v)=>{cfgS[k]=v;js("st",cfgS)};
@@ -927,34 +937,32 @@ function vid(w,m){
   else{const v=document.createElement("video");v.src=m.img;v.controls=true;v.playsInline=true;v.className="pic";v.onclick=e=>e.stopPropagation();w.appendChild(v)}}
 /* кружки */
 let cc=null,cheld=false;
+function hintPerm(){try{if(localStorage.getItem("ph1"))return;localStorage.setItem("ph1","1")}catch(e){}alert("Разрешение получено. Теперь зажмите кнопку и удерживайте, пока записываете.")}
 function camStop(cancel){if(!cc)return;cc.cancel=cancel;if(cc.mr.state!=="inactive")cc.mr.stop()}
 async function camStart(e){
   if(!base||cc||rc)return;
   let st;try{st=await navigator.mediaDevices.getUserMedia({audio:true,video:{facingMode:"user",width:{ideal:240},height:{ideal:240}}})}catch(x){alert("Нет доступа к микрофону или камере. Разрешите его в настройках.");return}
-  if(!cheld){st.getTracks().forEach(t=>t.stop());return}
+  if(!cheld){st.getTracks().forEach(t=>t.stop());hintPerm();return}
   const mt=["video/webm;codecs=vp8,opus","video/webm"].find(t=>window.MediaRecorder&&MediaRecorder.isTypeSupported(t))||"";
-  let mr;try{mr=new MediaRecorder(st,{...(mt?{mimeType:mt}:{}),videoBitsPerSecond:150000,audioBitsPerSecond:24000})}catch(x){st.getTracks().forEach(t=>t.stop());alert("Запись видео не поддерживается.");return}
+  let mr;for(const o of [{...(mt?{mimeType:mt}:{}),videoBitsPerSecond:130000,audioBitsPerSecond:24000},mt?{mimeType:mt}:{},{}]){try{mr=new MediaRecorder(st,o);break}catch(x){}}
+  if(!mr){st.getTracks().forEach(t=>t.stop());alert("Запись видео не поддерживается.");return}
   const ch=[],t0=Date.now(),pvw=$("circp");pvw.srcObject=st;pvw.play().catch(()=>{});$("circw").style.display="flex";$("circt").textContent="0:00";
   const iv=setInterval(()=>{const q=Math.floor((Date.now()-t0)/1000);$("circt").textContent=mmss(q);if(q>=20)camStop(false)},200);
-  mr.ondataavailable=ev=>{if(ev.data.size)ch.push(ev.data)};
+  let tot=0;mr.ondataavailable=ev=>{if(ev.data.size){ch.push(ev.data);tot+=ev.data.size;if(tot>520000)camStop(false)}};
   mr.onstop=async()=>{clearInterval(iv);st.getTracks().forEach(t=>t.stop());$("circw").style.display="none";pvw.srcObject=null;
     const cancel=cc&&cc.cancel,dur=Math.max(1,Math.round((Date.now()-t0)/1000));cc=null;if(cancel||Date.now()-t0<800)return;
-    const url=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(new Blob(ch,{type:mt||"video/webm"}))});
+    const url=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(new Blob(ch,{type:"video/webm"}))});
     if(url.length>780000){alert("Кружок слишком длинный.");return}
     post({img:url,dur,circ:1})};
   cc={mr,cancel:false,x0:e.clientX};mr.start(1000);if(navigator.vibrate)navigator.vibrate(25);
 }
-const cam=$("cam");
-cam.onpointerdown=e=>{e.preventDefault();cheld=true;cam.setPointerCapture(e.pointerId);camStart(e)};
-cam.onpointermove=e=>{if(cc&&e.clientX-cc.x0<-110)camStop(true)};
-cam.onpointerup=cam.onpointercancel=()=>{cheld=false;camStop(false)};
-cam.oncontextmenu=e=>e.preventDefault();
+
 /* истории */
 let stories=[];const STBG=["linear-gradient(160deg,#ff7a59,#a26bff)","linear-gradient(160deg,#22c1c3,#3b82f6)","linear-gradient(160deg,#f2b134,#e85d9a)","linear-gradient(160deg,#25d366,#0b4d5c)","linear-gradient(160deg,#5b8def,#7c5cff)","linear-gradient(160deg,#e85d9a,#ff2fd0)"];
 const watchStories=()=>onSnapshot(query(collection(db,"stories"),where("viewers","array-contains",me)),s=>{
   const lim=Date.now()-864e5;stories=[];
   s.docs.forEach(d=>{const v=d.data();if(v.ts>lim)stories.push({id:d.id,...v});else if(v.uid===me)deleteDoc(d.ref).catch(()=>{})});
-  stories.sort((a,b)=>a.ts-b.ts);renderStories()},()=>{});
+  stories.sort((a,b)=>a.ts-b.ts);renderStories()},()=>renderStories());
 async function renderStories(){
   const bar=$("stbar"),by={};stories.forEach(x=>(by[x.uid]=by[x.uid]||[]).push(x));
   const us=[me,...Object.keys(by).filter(u=>u!==me)];for(const u of us)if(u!==me)await nickOf(u);
